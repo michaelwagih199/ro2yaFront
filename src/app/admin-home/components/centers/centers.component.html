@@ -1,0 +1,131 @@
+<mat-card class="mat-elevation-z2 ">
+    <mat-card-header>
+        <div class="row container-fluid justify-content-around">
+
+            <!-- <div class="col-2 mt-1">
+                <button mat-icon-button color="primary" (click)="refresh()">
+                    <mat-icon>replay</mat-icon>
+                </button>
+            </div> -->
+
+            <div class="col-5 mt-1">
+                <form>
+                    <mat-form-field appearance="outline" class="full-width">
+                        <mat-label>CenterSearch</mat-label>
+                        <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto"
+                            [(ngModel)]="searchInout" (keyup.enter)="search()" (click)="onSearchClick()">
+                        <mat-icon color="accent" matSuffix>search</mat-icon>
+                        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                            <mat-option *ngFor="let option of filteredOptions | async" [value]="option"
+                                (click)="OnHumanSelected(searchInout)">
+                                {{option}}
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </form>
+            </div>
+
+            <div class="col-3 mt-1">
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label> Search Filter </mat-label>
+                    <mat-select  [(ngModel)]="selectedSearchFilter"
+                        (ngModelChange)="onSearchFilterChange($event)">
+                        <mat-option value="name" (click)="refresh()">All Data</mat-option>
+                        <mat-option value="name">Name</mat-option>
+                        <mat-option value="code">Phone</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="col-2 mt-2">
+                <button mat-mini-fab color="accent" (click)="openSaveModal(content, center ,'Save Center')">
+                    <mat-icon>add</mat-icon>
+                </button>
+            </div>
+        </div>
+    </mat-card-header>
+    <mat-card-content>
+        <mat-progress-bar color="accent" mode="indeterminate" *ngIf="isLoading" value="20"></mat-progress-bar>
+        <table mat-table
+            [dataSource]="centerList | paginate: {itemsPerPage: pageSize, currentPage: page, totalItems:count}">
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="hospitalName">
+                <th mat-header-cell *matHeaderCellDef> Name </th>
+                <td mat-cell *matCellDef="let element"> {{element.hospitalName}} </td>
+            </ng-container>
+
+
+            <ng-container matColumnDef="hospitalPhone1">
+                <th mat-header-cell *matHeaderCellDef> Phone1 </th>
+                <td mat-cell *matCellDef="let element"> {{element.hospitalPhone1}} </td>
+            </ng-container>
+
+
+            <ng-container matColumnDef="hospitalPhone2">
+                <th mat-header-cell *matHeaderCellDef> Phone2 </th>
+                <td mat-cell *matCellDef="let element"> {{element.hospitalPhone2}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef> </th>
+                <td mat-cell *matCellDef="let element" class="action-link">
+
+                    <button mat-icon-button color="primary" (click)="openSaveModal(content,element,'Update Center')">
+                        <mat-icon>create</mat-icon>
+                    </button>
+                    |
+                    <button mat-icon-button color="warn" (click)="deleteDialog(element)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+        <div class="text-center mt-3" style="direction: ltr;">
+            <pagination-controls (pageChange)="handlePageChange($event)"></pagination-controls>
+        </div>
+    </mat-card-content>
+</mat-card>
+
+<!-- add modal -->
+<div>
+    <ng-template #content let-modal>
+        <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">Save Center</h4>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form nz-form [formGroup]="validateForm">
+                <mat-form-field class="full-width" appearance="outline">
+                    <mat-label> Center Name </mat-label>
+                    <input matInput required appearance="outline" class="full-width" placeholder="Center Name" type="text"
+                        formControlName="hospitalName" [(ngModel)]="center.hospitalName" autocomplete="off">
+                </mat-form-field>
+
+                <mat-form-field class="full-width" appearance="outline">
+                    <mat-label> Center Phone1 </mat-label>
+                    <input matInput required appearance="outline" class="full-width" placeholder="Center Phone1" type="text"
+                        formControlName="hospitalPhone1" [(ngModel)]="center.hospitalPhone1" autocomplete="off">
+                </mat-form-field>
+
+                <mat-form-field class="full-width" appearance="outline">
+                    <mat-label> Center Phone2 </mat-label>
+                    <input matInput appearance="outline" class="full-width" placeholder="Center Phone2" type="text"
+                        formControlName="hospitalPhone2" [(ngModel)]="center.hospitalPhone2" autocomplete="off">
+                </mat-form-field>
+
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button mat-raised-button color="primary" (click)="onSaveCenter()"
+                [disabled]="!validateForm.valid">{{saveCheck}}</button>
+        </div>
+    </ng-template>
+</div>

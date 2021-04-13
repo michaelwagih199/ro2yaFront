@@ -1,0 +1,57 @@
+<!-- Toolbar -->
+<div class="doNotPrint">
+	<mat-toolbar color="primary" class="header">
+		<span>
+			<mat-icon (click)="sidenav.toggle()" class="hamburger">menu</mat-icon>
+		</span>
+		<p class="mt-2" style="font-size: 18px;">{{screenTitle}}</p>
+		<div class="row mr-2">
+			<p class="mt-2" style="font-size: 18px;">{{userName}}</p>
+			<button mat-icon-button color="accent">
+				<mat-icon>person</mat-icon>
+			</button>
+		</div>
+	</mat-toolbar>
+	<mat-sidenav-container>
+		<!-- Sidenav -->
+		<mat-sidenav #sidenav [mode]="isBiggerScreen() ? 'over' : 'side'" [(opened)]="opened" [fixedInViewport]="true"
+			[fixedTopGap]>
+			<mat-nav-list>
+				<a *ngIf="DynamicNavBar.saleOrder" mat-list-item [routerLink]="'/admin'" (click)="addTitle('Patients')">
+					<mat-icon>person</mat-icon> Patients
+				</a>
+
+				<a *ngIf="DynamicNavBar.customers" mat-list-item [routerLink]="'/admin/centers'"
+					(click)="addTitle('Centers')">
+					<mat-icon>medical_services</mat-icon> Centers
+				</a>
+
+				<a *ngIf="DynamicNavBar.stock" mat-list-item [routerLink]="'/admin/doctors'"
+					(click)="addTitle('Doctors')">
+					<mat-icon>medication</mat-icon> Doctors
+				</a>
+
+				<a *ngIf="DynamicNavBar.suppliers" mat-list-item [routerLink]="'/suppliers'"
+					(click)="addTitle('Reports')">
+					<mat-icon>auto_graph</mat-icon> Reports
+				</a>
+
+				<a mat-list-item *ngIf="DynamicNavBar.suppliers" mat-list-item [routerLink]="'/suppliers'"
+					(click)="addTitle('Setting')">
+					<mat-icon>settings</mat-icon> Setting
+				</a>
+
+				<a mat-list-item (click)="aboutApp()">
+					<mat-icon>favorite_border</mat-icon> AboutApp
+				</a>
+
+			</mat-nav-list>
+
+		</mat-sidenav>
+		<!-- Main content -->
+		<mat-sidenav-content>
+			<router-outlet></router-outlet>
+		</mat-sidenav-content>
+	</mat-sidenav-container>
+
+</div>
