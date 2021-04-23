@@ -1,0 +1,156 @@
+<div class="container-fluid mt-2">
+
+    <mat-progress-bar class="m-2" color="accent" mode="indeterminate" *ngIf="isLoading" value="20"></mat-progress-bar>
+
+    <div class="row">
+        <div class="col-3">
+            <div class="customClass">
+                <p>Name</p>
+                <mat-divider></mat-divider>
+                <p class="text-center text-white font-weight-bold">{{patient?.patientName}}</p>
+            </div>
+        </div>
+
+        <div class="col-3">
+            <div class="customClass">
+                <p>Gender</p>
+                <mat-divider></mat-divider>
+                <p class="text-center text-white font-weight-bold">{{patient?.gender}}</p>
+            </div>
+        </div>
+
+        <div class="col-3">
+            <div class="customClass">
+                <p>Age </p>
+                <mat-divider></mat-divider>
+                <p class="text-center text-white font-weight-bold">{{patient?.age}}</p>
+            </div>
+        </div>
+
+        <div class="col-3">
+            <div class="customClass">
+                <p>Nationality</p>
+                <mat-divider></mat-divider>
+                <p class="text-center text-white font-weight-bold">{{patient?.nationality}}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="col-3">
+            <div class="customClass">
+                <p>Governorate</p>
+                <mat-divider></mat-divider>
+                <p class="text-center text-white font-weight-bold">{{patient?.governorate}}</p>
+            </div>
+        </div>
+
+        <div class="col-3">
+            <div class="customClass">
+                <p>Address</p>
+                <mat-divider></mat-divider>
+                <p class="text-center text-white font-weight-bold">{{patient?.address}}</p>
+            </div>
+        </div>
+
+        <div class="col-3">
+            <div class="customClass">
+                <p>ID NO </p>
+                <mat-divider></mat-divider>
+                <p class="text-center text-white font-weight-bold">{{patient?.patientIDNumber}}</p>
+            </div>
+        </div>
+
+        <div class="col-3">
+            <div class="customClass">
+                <p>Phone 1</p>
+                <mat-divider></mat-divider>
+                <p class="text-center text-white font-weight-bold">{{patient?.phone}}</p>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row mt-2">
+
+        <div class="col-3">
+            <div class="customClass">
+                <p>Phone 2</p>
+                <mat-divider></mat-divider>
+                <p class="text-center text-white font-weight-bold">{{patient?.phone2}}</p>
+            </div>
+        </div>
+
+        <div class="col-3">
+            <div class="customClass">
+                <p>Center </p>
+                <mat-divider></mat-divider>
+                <p class="text-center text-white font-weight-bold">{{patient?.doctor?.hospital?.hospitalName}}</p>
+            </div>
+        </div>
+
+        <div class="col-3">
+            <div class="customClass">
+                <p>Center Phone</p>
+                <mat-divider></mat-divider>
+                <p class="text-center text-white font-weight-bold">{{patient?.doctor?.hospital?.hospitalPhone1}}</p>
+            </div>
+        </div>
+
+        <div class="col-3">
+            <div class="customClass">
+                <p>Doctor</p>
+                <mat-divider></mat-divider>
+                <p class="text-center text-white font-weight-bold">{{patient?.doctor?.doctorName}}</p>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row mt-2">
+
+        <div class="col-3">
+            <div class="customClass">
+                <p>Indication</p>
+                <mat-divider></mat-divider>
+                <p class="text-center text-white font-weight-bold">{{patient?.indication}}</p>
+            </div>
+        </div>
+
+        <div class="col-3">
+            <div class="customClass">
+                <p>Date diagnosed </p>
+                <mat-divider></mat-divider>
+                <p class="text-center text-white font-weight-bold">{{patient?.diagnosedDate}}</p>
+            </div>
+        </div>
+
+        <div class="col-3">
+            <div class="customClass">
+                <p>Date starting Lucentis</p>
+                <mat-divider></mat-divider>
+                <p class="text-center text-white font-weight-bold">{{patient?.startingLucentisDate}}</p>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="customClass">
+                <p>Previous treatment </p>
+                <mat-divider></mat-divider>
+                <p class="text-center text-white font-weight-bold">{{patient?.previousTreatment}}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-2">
+
+        <div class="col">
+            <div class="customClass">
+                <p>Comment</p>
+                <mat-divider></mat-divider>
+                <p class="text-center text-white font-weight-bold">{{patient?.comments}}</p>
+            </div>
+        </div>
+    </div>
+
+
+</div>

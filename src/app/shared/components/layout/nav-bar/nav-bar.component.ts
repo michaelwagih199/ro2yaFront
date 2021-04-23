@@ -13,6 +13,7 @@ import { AboutAppDialogComponent } from '../dialog/about-app-dialog/about-app-di
 })
 export class NavBarComponent implements OnInit {
   userName: any;
+  
   DynamicNavBar = {
     saleOrder: true,
     stock: false,

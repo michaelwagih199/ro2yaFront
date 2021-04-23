@@ -30,9 +30,9 @@
                     <mat-label> Search Filter </mat-label>
                     <mat-select  [(ngModel)]="selectedSearchFilter"
                         (ngModelChange)="onSearchFilterChange($event)">
-                        <mat-option value="name" (click)="refresh()">All Data</mat-option>
+                        <mat-option (click)="refresh()">All Data</mat-option>
                         <mat-option value="name">Name</mat-option>
-                        <mat-option value="code">Phone</mat-option>
+                        <mat-option value="phone">Phone</mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>

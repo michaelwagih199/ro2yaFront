@@ -1,0 +1,159 @@
+<h2 mat-dialog-title>Save Patient</h2>
+<mat-dialog-content>
+    <form [formGroup]="validateForm">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col">
+                    <mat-form-field class="full-width" appearance="outline">
+                        <mat-label> Patient Name </mat-label>
+                        <input matInput required appearance="outline" class="full-width" placeholder="Patient Name"
+                            type="text" formControlName="patientName" [(ngModel)]="patient.patientName"
+                            autocomplete="off">
+                    </mat-form-field>
+
+                </div>
+                <div class="col">
+                    <mat-form-field class="full-width" appearance="outline">
+                        <mat-label> ID NO </mat-label>
+                        <input matInput required appearance="outline" class="full-width" placeholder="Center Name"
+                            type="text" formControlName="patientIDNumber" [(ngModel)]="patient.patientIDNumber"
+                            autocomplete="off">
+                    </mat-form-field>
+                </div>
+                <div class="col">
+                    <mat-form-field class="full-width" appearance="outline">
+                        <mat-label> Phone </mat-label>
+                        <input matInput required appearance="outline" class="full-width" placeholder="Phone" type="text"
+                            formControlName="phone" [(ngModel)]="patient.phone" autocomplete="off">
+                    </mat-form-field>
+                </div>
+                <div class="col">
+                    <mat-form-field class="full-width" appearance="outline">
+                        <mat-label> Phone2 </mat-label>
+                        <input matInput required appearance="outline" class="full-width" placeholder="Phone2"
+                            type="text" formControlName="phone2" [(ngModel)]="patient.phone2" autocomplete="off">
+                    </mat-form-field>
+                </div>
+            </div>
+            <!--first row-->
+            <div class="row">
+                <div class="col">
+                    <mat-form-field class="full-width" appearance="outline">
+                        <mat-label> Nationality </mat-label>
+                        <input matInput required appearance="outline" class="full-width" placeholder="Nationality"
+                            type="text" formControlName="nationality" [(ngModel)]="patient.nationality"
+                            autocomplete="off">
+                    </mat-form-field>
+                </div>
+                <div class="col">
+                    <mat-form-field class="full-width" appearance="outline">
+                        <mat-label> address </mat-label>
+                        <input matInput required appearance="outline" class="full-width" placeholder="address"
+                            type="text" formControlName="address" [(ngModel)]="patient.address" autocomplete="off">
+                    </mat-form-field>
+                </div>
+                <div class="col">
+
+                    <mat-form-field class="full-width" appearance="outline">
+                        <mat-label>Governorate</mat-label>
+                        <mat-select matNativeControl required [(ngModel)]="patient.governorate"
+                            formControlName="governorate">
+                            <mat-option *ngFor="let item of governorates" [value]="item">
+                                {{item}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                </div>
+
+                <div class="col">
+
+                    <mat-form-field class="full-width" appearance="outline">
+                        <mat-label>Gender</mat-label>
+                        <mat-select matNativeControl required [(ngModel)]="patient.gender" formControlName="gender">
+                            <mat-option value="Male">Male</mat-option>
+                            <mat-option value="Female">Female</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                </div>
+
+            </div>
+            <!--second row-->
+            <div class="row">
+                <div class="col">
+                    <mat-form-field class="full-width" appearance="outline">
+                        <mat-label> Age </mat-label>
+                        <input matInput required appearance="outline" class="full-width" placeholder="age" type="text"
+                            formControlName="age" [(ngModel)]="patient.age" autocomplete="off">
+                    </mat-form-field>
+                </div>
+                <div class="col">
+                    <mat-form-field class="full-width" appearance="outline">
+                        <mat-label> Indication </mat-label>
+                        <input matInput required appearance="outline" class="full-width" placeholder="indication"
+                            type="text" formControlName="indication" [(ngModel)]="patient.indication"
+                            autocomplete="off">
+                    </mat-form-field>
+                </div>
+                <div class="col">
+
+                    <mat-form-field class="full-width" appearance="outline">
+                        <mat-label>diagnosedDate</mat-label>
+                        <input matInput required [matDatepicker]="picker" formControlName="diagnosedDate"
+                            [(ngModel)]="patient.diagnosedDate" autocomplete="off">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+
+                </div>
+                <div class="col">
+                    <mat-form-field class="full-width" appearance="outline">
+                        <mat-label>LucentisDate</mat-label>
+                        <input matInput required [matDatepicker]="startingLucentisDate"
+                            formControlName="startingLucentisDate" [(ngModel)]="patient.startingLucentisDate"
+                            autocomplete="off">
+                        <mat-datepicker-toggle matSuffix [for]="startingLucentisDate"></mat-datepicker-toggle>
+                        <mat-datepicker #startingLucentisDate></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </div>
+            <!--end row-->
+            <div class="row">
+                <div class="col">
+                    <mat-form-field class="full-width" appearance="outline">
+                        <mat-label> Comments </mat-label>
+                        <input matInput required appearance="outline" class="full-width" placeholder="comments"
+                            type="text" formControlName="comments" [(ngModel)]="patient.comments" autocomplete="off">
+                    </mat-form-field>
+                </div>
+                <div class="col">
+                    <mat-form-field class="full-width" appearance="outline">
+                        <mat-label> PreviousTreatment </mat-label>
+                        <input matInput appearance="outline" class="full-width" placeholder="previousTreatment"
+                            type="text" formControlName="previousTreatment" [(ngModel)]="patient.previousTreatment"
+                            autocomplete="off">
+                    </mat-form-field>
+                </div>
+
+                <div class="col">
+                    <mat-form-field class="full-width" appearance="outline">
+                        <mat-label>Doctor</mat-label>
+                        <mat-select matNativeControl required [(ngModel)]="doctorId"
+                            formControlName="doctor">
+                            <mat-option *ngFor="let item of doctorList" [value]="item.id">
+                                {{item.doctorName}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+            </div>
+        </div>
+    </form>
+
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+    <button mat-raised-button (click)="save()" [disabled]="!validateForm.valid">Save</button>
+    <button mat-raised-button color="primary" (click)="close()" tabindex="1">Cancel</button>
+</mat-dialog-actions>

@@ -1,0 +1,32 @@
+export class StaticData {
+  static governorates: Array<string> = [
+    'Matruh',
+    'Alexandria',
+    'Beheira',
+    'Kafr El Sheikh',
+    'Dakahlia',
+    'Damietta',
+    'Port Said',
+    'North Sinai',
+    'Gharbia',
+    'Monufia',
+    'Qalyubia',
+    'Sharqia',
+    'Ismailia',
+    'Giza',
+    'Faiyum',
+    'Cairo',
+    'Suez',
+    'South Sinai',
+    'Beni Suef',
+    'Minya',
+    'New Valley',
+    'Asyut',
+    'Red Sea',
+    'Sohag',
+    'Qena',
+    'Luxor',
+    'Aswan',
+  ];
+
+}

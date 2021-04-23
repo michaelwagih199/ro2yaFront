@@ -1,3 +1,4 @@
+import { PatientsModel } from './../../../models/patients';
 import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
@@ -5,21 +6,25 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import { CenterModel } from 'src/app/admin-home/models/center';
+import { CenterService } from 'src/app/admin-home/services/center.service';
 import { ConfirmationDialog } from 'src/app/shared/components/layout/dialog/confirmation/confirmation.component';
-import { CenterModel } from '../../models/center';
-import { CenterService } from '../../services/center.service';
+import { PatientDataService } from 'src/app/admin-home/services/patient-data.service';
+import { StaticData } from 'src/app/_helpers/staticData';
+import { AddPatientComponent } from '../matDialog/add-patient/add-patient.component';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-centers',
-  templateUrl: './centers.component.html',
-  styleUrls: ['./centers.component.scss'],
+  selector: 'app-patients-data',
+  templateUrl: './patients-data.component.html',
+  styleUrls: ['./patients-data.component.scss'],
 })
-export class CentersComponent implements OnInit {
+export class PatientsDataComponent implements OnInit {
   validateForm!: FormGroup;
   isLoading: boolean = false;
   searchInout: any;
@@ -29,12 +34,14 @@ export class CentersComponent implements OnInit {
   //for autocomplete
   options!: string[];
   centerList!: CenterModel[];
+  patientList!: PatientsModel[];
   center: CenterModel = new CenterModel();
 
   displayedColumns: string[] = [
-    'hospitalName',
-    'hospitalPhone1',
-    'hospitalPhone2',
+    'patientName',
+    'patientIDNumber',
+    'phone',
+    'center',
     'actions',
   ];
 
@@ -43,15 +50,14 @@ export class CentersComponent implements OnInit {
   constructor(
     private dialog: MatDialog,
     private _snackBar: MatSnackBar,
-    private centerService: CenterService,
+    private patientService: PatientDataService,
     private fb: FormBuilder,
-    private modalService: NgbModal
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     this.getNames();
-    this.retrieveProductsPagable();
-    this.validateform();
+    this.retrievePagable();
   }
 
   private _filter(value: string): string[] {
@@ -65,7 +71,7 @@ export class CentersComponent implements OnInit {
    * data
    */
   getNames() {
-    this.centerService.getNames().subscribe(
+    this.patientService.getNames().subscribe(
       (response) => {
         this.options = response;
         this.filteredOptions = this.myControl.valueChanges.pipe(
@@ -80,7 +86,7 @@ export class CentersComponent implements OnInit {
   }
 
   getPhones() {
-    this.centerService.getPhones().subscribe(
+    this.patientService.getPhones().subscribe(
       (response) => {
         this.options = response;
         this.filteredOptions = this.myControl.valueChanges.pipe(
@@ -94,13 +100,13 @@ export class CentersComponent implements OnInit {
     );
   }
 
-  retrieveProductsPagable() {
+  retrievePagable() {
     this.isLoading = true;
     const params = this.getRequestParams(this.page, this.pageSize);
-    this.centerService.getAllPagination(params).subscribe(
+    this.patientService.getAllPagination(params).subscribe(
       (data) => {
         this.isLoading = false;
-        this.centerList = data.hospitals;
+        this.patientList = data.patients;
         this.count = data.totalItems;
       },
       (error) => {
@@ -112,10 +118,10 @@ export class CentersComponent implements OnInit {
 
   findByName() {
     this.isLoading = true;
-    this.centerService.findByName(this.searchInout).subscribe(
+    this.patientService.findByName(this.searchInout).subscribe(
       (data) => {
         this.isLoading = false;
-        this.centerList = data;
+        this.patientList = data;
       },
       (error) => {
         this.isLoading = false;
@@ -126,10 +132,10 @@ export class CentersComponent implements OnInit {
 
   findByPhone() {
     this.isLoading = true;
-    this.centerService.findByPhone(this.searchInout).subscribe(
+    this.patientService.findByPhone(this.searchInout).subscribe(
       (data) => {
         this.isLoading = false;
-        this.centerList = data;
+        this.patientList = data;
       },
       (error) => {
         this.isLoading = false;
@@ -147,48 +153,15 @@ export class CentersComponent implements OnInit {
     else if (this.selectedSearchFilter == 'phone') this.findByPhone();
   }
 
-  onSaveCenter() {
-    if (this.saveCheck == 'Save Center') {
-      this.isLoading = true;
-      this.centerService.create(this.center).subscribe(
-        (data) => {
-          this.isLoading = false;
-          this.openSnackBar('Center Saved Succesfully', '');
-          this.refresh();
-          this.modalService.dismissAll();
-        },
-        (error) => {
-          this.isLoading = false;
-          console.log(error);
-        }
-      );
-    } else {
-      //update
-      this.isLoading = true;
-      this.centerService.update(this.center.id, this.center).subscribe(
-        (data) => {
-          this.isLoading = false;
-          this.openSnackBar('Center Saved Succesfully', '');
-          this.refresh();
-          this.modalService.dismissAll();
-        },
-        (error) => {
-          this.isLoading = false;
-          console.log(error);
-        }
-      );
-    }
-  }
-
   refresh() {
     this.searchInout = '';
-    this.retrieveProductsPagable();
+    this.retrievePagable();
   }
 
-  deleteDialog(element: CenterModel) {
+  deleteDialog(element: PatientsModel) {
     const dialogRef = this.dialog.open(ConfirmationDialog, {
       data: {
-        message: `Are You Shoure To Delete? ${element.hospitalName}`,
+        message: `Are You Shoure To Delete? ${element.patientName}`,
         buttonText: {
           ok: `Delete`,
           cancel: `Cancel`,
@@ -197,7 +170,7 @@ export class CentersComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
       if (confirmed) {
-        this.centerService.delete(element.id).subscribe(
+        this.patientService.delete(element.id).subscribe(
           (data) => {
             this.openSnackBar(`Center Deleted Successfully`, '');
             this.refresh();
@@ -216,16 +189,54 @@ export class CentersComponent implements OnInit {
     return value;
   }
 
-  openSaveModal(content: any, model: CenterModel, saveCheck: string) {
-    if (saveCheck == 'Save Center') {
-      this.saveCheck = saveCheck;
-      this.center = new CenterModel();
-      this.modalService.open(content);
-    } else {
-      this.saveCheck = saveCheck;
-      this.center = model;
-      this.modalService.open(content);
-    }
+  savePatient() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    // dialogConfig.data = {
+
+    // };
+    this.dialog.open(AddPatientComponent, dialogConfig);
+    const dialogRef = this.dialog.open(AddPatientComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe((data) => {
+      console.log(data);
+      this.patientService.create(data.model, data.doctorId).subscribe(
+        (data) => {
+          this.openSnackBar('Patient Saved Successfully', '');
+          this.retrievePagable();
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    });
+  }
+
+  editePatient(element: PatientsModel) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = element;
+    this.dialog.open(AddPatientComponent, dialogConfig);
+    const dialogRef = this.dialog.open(AddPatientComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe((data) => {
+      console.log(data);
+      this.patientService
+        .update(data.model.id, data.model, data.doctorId)
+        .subscribe(
+          (data) => {
+            this.openSnackBar('Patient Saved Successfully', '');
+            this.retrievePagable();
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+    });
+  }
+
+  toInfo(id:number) {
+    this.router.navigate([`admin/patientDetails/${id}`]);
   }
 
   OnHumanSelected(SelectedHuman: any) {
@@ -246,14 +257,6 @@ export class CentersComponent implements OnInit {
     this.searchInout = '';
   }
 
-  validateform() {
-    this.validateForm = this.fb.group({
-      hospitalName: ['', [Validators.required]],
-      hospitalPhone1: ['', [Validators.required]],
-      hospitalPhone2: ['', null],
-    });
-  }
-
   /**
    * UIUX and Helbers
    *
@@ -270,7 +273,7 @@ export class CentersComponent implements OnInit {
   pageSize = 6;
   handlePageChange(event: any) {
     this.page = event;
-    this.retrieveProductsPagable();
+    this.retrievePagable();
   }
 
   getRequestParams(page: any, pageSize: any) {

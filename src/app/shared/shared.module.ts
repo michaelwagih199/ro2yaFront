@@ -22,7 +22,7 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
     RouterModule,
     NgMaterialModule,
     NgxPaginationModule,
-    NgxMatSelectSearchModule
+    NgxMatSelectSearchModule,
    ],
   exports: [   
     CommonModule,
