@@ -38,6 +38,7 @@ export class PatientsDataComponent implements OnInit {
   center: CenterModel = new CenterModel();
 
   displayedColumns: string[] = [
+    'patientCode',
     'patientName',
     'patientIDNumber',
     'phone',

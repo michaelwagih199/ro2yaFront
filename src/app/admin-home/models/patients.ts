@@ -3,6 +3,7 @@ import { DoctorModel } from "./doctor"
 export class PatientsModel {
     id!: number
     age!: string
+    patientCode!:string
     gender!: string
     phone!: string
     phone2!: string

@@ -11,10 +11,11 @@ import { PatientsDataComponent } from './components/patients/patients-data/patie
 import { PatientsCycleComponent } from './components/patients/patients-cycle/patients-cycle.component';
 import { AddPatientComponent } from './components/patients/matDialog/add-patient/add-patient.component';
 import { PatientDetailsComponent } from './components/patients/patient-details/patient-details.component';
+import { AddPatientCycleComponent } from './components/patients/matDialog/add-patient-cycle/add-patient-cycle.component';
 
 
 @NgModule({
-  declarations: [AdminHomeComponent, CentersComponent, DoctorsComponent, PatientsComponent, PatientsDataComponent, PatientsCycleComponent, AddPatientComponent, PatientDetailsComponent],
+  declarations: [AdminHomeComponent, CentersComponent, DoctorsComponent, PatientsComponent, PatientsDataComponent, PatientsCycleComponent, AddPatientComponent, PatientDetailsComponent, AddPatientCycleComponent],
   imports: [
     CommonModule,
     HomeRoutingModule,
