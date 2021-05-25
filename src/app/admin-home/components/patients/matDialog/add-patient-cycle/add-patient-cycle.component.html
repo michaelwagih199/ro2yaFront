@@ -1,1 +1,87 @@
-<p>add-patient-cycle works!</p>
+<h2 mat-dialog-title>Save Cycle</h2>
+<mat-dialog-content>
+    <form [formGroup]="validateForm">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col">
+
+                    <mat-form-field appearance="fill">
+                        <mat-label> Lucentis Injection Date </mat-label>
+                        <input matInput required [matDatepicker]="picker" formControlName="injectionDate"
+                            [(ngModel)]="patient.injectionDate" autocomplete="off">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+
+                <div class="col">
+                    <mat-form-field class="full-width" appearance="outline">
+                        <mat-label>Injection Payment</mat-label>
+                        <mat-select matNativeControl required [(ngModel)]="patient.injectionPayment"
+                            formControlName="injectionPayment">
+                            <mat-option value="FULL">FULL</mat-option>
+                            <mat-option value="PARTIAL">PARTIAL</mat-option>
+                            <mat-option value="ZERO">ZERO</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <div class="col">
+                    <mat-form-field class="full-width" appearance="outline">
+                        <mat-label>Injection Eye</mat-label>
+                        <mat-select matNativeControl required [(ngModel)]="patient.injectionEye"
+                            formControlName="injectionEye">
+                            <mat-option value="LEFT">Left Eye</mat-option>
+                            <mat-option value="Right">Right Eye</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+            </div>
+            <div class="row">
+
+                <div class="col">
+                    <mat-form-field class="full-width" appearance="outline">
+                        <mat-label>Hospital</mat-label>
+                        <mat-select matNativeControl required [(ngModel)]="centerId"
+                            formControlName="hospital">
+                            <mat-option *ngFor="let item of centerList" [value]="item.id">
+                                {{item.hospitalName}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+               
+                <div class="col">
+                    <mat-form-field appearance="outline">
+                        <mat-label> voucherNo </mat-label>
+                        <input matInput  required placeholder="VoucherNo"
+                            formControlName="voucherNo" [(ngModel)]="patient.voucherNo" autocomplete="off">
+                    </mat-form-field>
+                </div>
+
+                <div class="col">
+                    <mat-form-field appearance="fill">
+                        <mat-label> OCT-Date </mat-label>
+                        <input matInput required [matDatepicker]="octDate" formControlName="octDate"
+                            [(ngModel)]="patient.octDate" autocomplete="off">
+                        <mat-datepicker-toggle matSuffix [for]="octDate"></mat-datepicker-toggle>
+                        <mat-datepicker #octDate></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </div>
+            
+            <mat-form-field appearance="outline" class="full-width" >
+                <mat-label>Comment</mat-label>
+                <textarea matInput placeholder="Comment" formControlName="comment" [(ngModel)]="patient.comment"
+                    autocomplete="off"></textarea>
+            </mat-form-field>
+
+        </div>
+    </form>
+
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+    <button mat-raised-button (click)="save()" [disabled]="!validateForm.valid">Save</button>
+    <button mat-raised-button color="primary" (click)="close()" tabindex="1">Cancel</button>
+</mat-dialog-actions>

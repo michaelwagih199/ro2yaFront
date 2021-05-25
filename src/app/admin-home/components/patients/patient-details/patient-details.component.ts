@@ -10,9 +10,10 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./patient-details.component.scss'],
 })
 export class PatientDetailsComponent implements OnInit {
+
   patient: PatientsModel = new PatientsModel();
-  private routeSub!: Subscription;
   patientId!: number;
+  private routeSub!: Subscription;
   isLoading: boolean = false;
 
   constructor(
