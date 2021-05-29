@@ -8,6 +8,12 @@ import { AddPatientCycleComponent } from '../matDialog/add-patient-cycle/add-pat
 import { Subscription } from 'rxjs';
 import { PatientCycleService } from '../../../services/patient-cycle.service';
 import { PatientCycleModel } from '../../../models/patientCycle';
+import { ConfirmationDialog } from 'src/app/shared/components/layout/dialog/confirmation/confirmation.component';
+import { PatientSycleStatuesService } from '../../../services/patient-sycle-statues.service';
+import {
+  CycleStatuesModel,
+  EnumCycleStatues,
+} from 'src/app/admin-home/models/CycleStatues';
 
 @Component({
   selector: 'app-patients-cycle',
@@ -19,18 +25,31 @@ export class PatientsCycleComponent implements OnInit {
   isLoading: boolean = false;
   patientId: any;
   patientCycleList!: PatientCycleModel[];
+  cycleStatuesModel: CycleStatuesModel = new CycleStatuesModel();
+
+  displayedColumns: string[] = [
+    'injectionDate',
+    'comment',
+    'injectionPayment',
+    'octDate',
+    'injectionEye',
+    'voucherNo',
+    'centerId',
+    'actions',
+  ];
 
   constructor(
     private dialog: MatDialog,
     private patientCycleService: PatientCycleService,
     private _snackBar: MatSnackBar,
     private fb: FormBuilder,
+    private patientSycleStatuesService: PatientSycleStatuesService,
     private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    this.getPatintCycle()
     this.getPatientId();
+    this.getPatintCycle();
   }
 
   /**
@@ -42,12 +61,12 @@ export class PatientsCycleComponent implements OnInit {
       this.patientId = params['id'];
     });
   }
+
   getPatintCycle() {
     this.isLoading = true;
     this.patientCycleService.findPatientCycle(this.patientId).subscribe(
       (data) => {
-console.log([{data}]);
-
+        console.log([{ data }]);
         this.patientCycleList = data;
         this.isLoading = false;
       },
@@ -56,6 +75,7 @@ console.log([{data}]);
       }
     );
   }
+
   /**
    * events
    */
@@ -74,7 +94,83 @@ console.log([{data}]);
         .create(data.model, data.centerId, this.patientId)
         .subscribe(
           (data) => {
-            this.openSnackBar('Saved Success', '');
+            this.cycleStatuesModel.cycleStatues = EnumCycleStatues.Active;
+            this.patientSycleStatuesService
+              .create(this.cycleStatuesModel)
+              .subscribe(
+                (data) => {
+                  this.getPatintCycle();
+                  this.openSnackBar('Saved Success', '');
+                },
+                (error) => {
+                  console.log(error);
+                }
+              );
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+    });
+  }
+
+  toInfo(item: PatientCycleModel) {
+    this.isLoading = true
+    this.patientSycleStatuesService.findByCycleId(item.id).subscribe(
+      (data) => {
+        this.isLoading = false
+        this.cycleStatuesModel = data;
+      },
+      (error) => {
+        this.isLoading = false
+        console.log(error);
+      }
+    );
+  }
+
+  deleteDialog(element: PatientCycleModel) {
+    const dialogRef = this.dialog.open(ConfirmationDialog, {
+      data: {
+        message: `Are You Shoure To Delete? `,
+        buttonText: {
+          ok: `Delete`,
+          cancel: `Cancel`,
+        },
+      },
+    });
+    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+      if (confirmed) {
+        this.patientCycleService.delete(element.id).subscribe(
+          (data) => {
+            this.openSnackBar(`Center Deleted Successfully`, '');
+            this.getPatintCycle();
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+        const a = document.createElement('a');
+        a.click();
+        a.remove();
+      }
+    });
+  }
+
+  editeDialog(element: PatientCycleModel) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = element;
+    this.dialog.open(AddPatientCycleComponent, dialogConfig);
+    const dialogRef = this.dialog.open(AddPatientCycleComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe((data) => {
+      console.log(data);
+      this.patientCycleService
+        .update(data.model.id, data.model, data.centerId, this.patientId)
+        .subscribe(
+          (data) => {
+            this.openSnackBar('Patient Saved Successfully', '');
+            this.getPatintCycle();
           },
           (error) => {
             console.log(error);

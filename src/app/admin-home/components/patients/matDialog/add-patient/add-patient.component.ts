@@ -12,6 +12,7 @@ import { StaticData } from 'src/app/_helpers/staticData';
   styleUrls: ['./add-patient.component.scss'],
 })
 export class AddPatientComponent implements OnInit {
+  
   validateForm!: FormGroup;
   patient: PatientsModel = new PatientsModel();
   doctorId!: number;

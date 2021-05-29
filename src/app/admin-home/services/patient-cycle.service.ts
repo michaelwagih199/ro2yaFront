@@ -7,21 +7,25 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class PatientCycleService {
-
+  
   private baseUrl = `${environment.baseUrl}/patientCycle`;
 
   constructor(private http: HttpClient) {}
 
   findPatientCycle(patientId:number): Observable<any> {
-    return this.http.get(`${this.baseUrl}?patientId=${patientId}`);
+    return this.http.get(`${this.baseUrl}/patient?patientId=${patientId}`);
   }
 
   create(object: any, centerId: number, patientId: number): Observable<any> {
     return this.http.post(`${this.baseUrl}?patientId=${patientId}&hospitalId=${centerId}`, object);
   }
 
-  update(id: number, object: Object, centerId: number, patientId: number): Observable<any> {
-    return this.http.put(`${this.baseUrl}/${id}`, object);
+  update(id: number, object: Object, hospitalId: number, patientId: number): Observable<any> {
+    return this.http.put(`${this.baseUrl}/${id}?patientId=${patientId}&hospitalId=${hospitalId}`, object);
+  }
+  
+  delete(id:number): Observable<any> {
+    return this.http.put(`${this.baseUrl}/archive?id=${id}`,null);
   }
 
 }
