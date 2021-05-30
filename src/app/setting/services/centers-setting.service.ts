@@ -4,12 +4,11 @@ import { environment } from 'src/environments/environment';
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CentersSettingService {
-
   private baseUrl = `${environment.baseUrl}/settings/centers`;
-  
+
   constructor(private http: HttpClient) {}
 
   findAll(): Observable<any> {
@@ -21,23 +20,19 @@ export class CentersSettingService {
   }
 
   findByName(name: any): Observable<any> {
-    return this.http.get(`${this.baseUrl}/name?doctorName=${name}`);
+    return this.http.get(`${this.baseUrl}/name?centerName=${name}`);
   }
 
-  create(object: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}`, object);
+  create(object: any, centerId: number): Observable<any> {
+    return this.http.post(`${this.baseUrl}?hospitalId=${centerId}`, object);
   }
-  
-  update(id: number, object: Object, centerId: number): Observable<any> {
-    return this.http.put(
-      `${this.baseUrl}?id=${id}&centerId=${centerId}`,
-      object
-    );
+
+  update(id: number, object: Object): Observable<any> {
+    return this.http.put(`${this.baseUrl}/${id}`, object);
   }
 
   delete(id: number): Observable<any> {
     return this.http.put(`${this.baseUrl}/archive?id=${id}`, null);
   }
-
+  
 }
-

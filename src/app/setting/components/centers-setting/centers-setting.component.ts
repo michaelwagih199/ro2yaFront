@@ -13,7 +13,6 @@ import { map, startWith } from 'rxjs/operators';
 import { CenterModel } from 'src/app/admin-home/models/center';
 import { DoctorModel } from 'src/app/admin-home/models/doctor';
 import { CenterService } from 'src/app/admin-home/services/center.service';
-import { DotorServiceService } from 'src/app/admin-home/services/dotor-service.service';
 import { ConfirmationDialog } from 'src/app/shared/components/layout/dialog/confirmation/confirmation.component';
 import { CenterSettingModel } from '../../models/centerModel';
 import { CentersSettingService } from '../../services/centers-setting.service';
@@ -24,26 +23,20 @@ import { CentersSettingService } from '../../services/centers-setting.service';
   styleUrls: ['./centers-setting.component.scss'],
 })
 export class CentersSettingComponent implements OnInit {
-
   validateForm!: FormGroup;
   isLoading: boolean = false;
   searchInout: any;
   selectedSearchFilter!: string;
   saveCheck: string = 'Save Center';
   myControl = new FormControl();
-  selectHospital!: CenterModel;
-  
+  selectHospital!: number;
   centerSetting: CenterSettingModel = new CenterSettingModel();
 
   //for autocomplete
   options!: string[];
   centerList!: CenterModel[];
-  doctorList!: DoctorModel[];
-  center: CenterModel = new CenterModel();
-  doctor: DoctorModel = new DoctorModel();
-
-  displayedColumns: string[] = ['name', 'center', 'actions'];
-
+  centerSettingList!: CenterSettingModel[];
+  displayedColumns: string[] = ['center', 'userName', 'password', 'actions'];
   filteredOptions!: Observable<string[]>;
 
   constructor(
@@ -57,6 +50,7 @@ export class CentersSettingComponent implements OnInit {
 
   ngOnInit(): void {
     this.getNames();
+    this.getCenterSetting();
     this.validateform();
     this.findAllHospital();
   }
@@ -92,28 +86,13 @@ export class CentersSettingComponent implements OnInit {
     });
   }
 
-  getPhones() {
-    this.centerService.getPhones().subscribe(
-      (response) => {
-        this.options = response;
-        this.filteredOptions = this.myControl.valueChanges.pipe(
-          startWith(''),
-          map((value) => this._filter(value))
-        );
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-  }
-
-
+  
   findByName() {
     this.isLoading = true;
     this.centerSettingService.findByName(this.searchInout).subscribe(
       (data) => {
         this.isLoading = false;
-        this.doctorList = data;
+        this.centerSettingList = data;
       },
       (error) => {
         this.isLoading = false;
@@ -122,6 +101,18 @@ export class CentersSettingComponent implements OnInit {
     );
   }
 
+  getCenterSetting() {
+    this.isLoading = true;
+    this.centerSettingService.findAll().subscribe(
+      (data) => {
+        this.isLoading = false;
+        this.centerSettingList = data;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
 
   /**
    * events
@@ -132,26 +123,28 @@ export class CentersSettingComponent implements OnInit {
   }
 
   onSaveCenter() {
-    if (this.saveCheck == 'Save Doctor') {
+    if (this.saveCheck == 'Save Center') {
       this.isLoading = true;
-    console.log(this.selectHospital.hospitalName);
-    
-      // this.centerSettingService.create(this.centerSetting).subscribe(
-      //   (data) => {
-      //     this.isLoading = false;
-      //     this.openSnackBar('Doctor Saved Succesfully', '');
-      //     this.refresh();
-      //     this.modalService.dismissAll();
-      //   },
-      //   (error) => {
-      //     this.isLoading = false;
-      //     console.log(error);
-      //   }
-      // );
+      this.centerSettingService.create(this.centerSetting,this.selectHospital).subscribe(
+        (data) => {
+          this.isLoading = false;
+          if (data) {
+            this.openSnackBar('Center Saved Succesfully', '');
+          } else {
+            this.openSnackBar('Center Saved Before', '');
+          }
+          this.getCenterSetting()
+          this.modalService.dismissAll();
+        },
+        (error) => {
+          this.isLoading = false;
+          console.log(error);
+        }
+      );
+
     } else {
       //update
       this.isLoading = true;
-  
     }
   }
 
@@ -160,10 +153,10 @@ export class CentersSettingComponent implements OnInit {
     this.getNames();
   }
 
-  deleteDialog(element: DoctorModel) {
+  deleteDialog(element: CenterSettingModel) {
     const dialogRef = this.dialog.open(ConfirmationDialog, {
       data: {
-        message: `Are You Shoure To Delete? ${element.doctorName}`,
+        message: `Are You Shoure To Delete? ${element.hospital.hospitalName}`,
         buttonText: {
           ok: `Delete`,
           cancel: `Cancel`,
@@ -175,7 +168,7 @@ export class CentersSettingComponent implements OnInit {
         this.centerSettingService.delete(element.id).subscribe(
           (data) => {
             this.openSnackBar(`Doctor Deleted Successfully`, '');
-            this.refresh();
+            this.getCenterSetting();
           },
           (error) => console.log(error)
         );
@@ -191,14 +184,14 @@ export class CentersSettingComponent implements OnInit {
     return value;
   }
 
-  openSaveModal(content: any, model: DoctorModel, saveCheck: string) {
-    if (saveCheck == 'Save Doctor') {
+  openSaveModal(content: any, model: CenterSettingModel, saveCheck: string) {
+    if (saveCheck == 'Save Center') {
       this.saveCheck = saveCheck;
-      this.doctor = new DoctorModel();
+      this.centerSetting = new CenterSettingModel();
       this.modalService.open(content);
     } else {
       this.saveCheck = saveCheck;
-      this.doctor = model;
+      this.centerSetting = model;
       this.modalService.open(content);
     }
   }
@@ -207,7 +200,6 @@ export class CentersSettingComponent implements OnInit {
     this.searchInout = SelectedHuman;
     this.findByName();
   }
-
 
   onSearchClick() {
     this.searchInout = '';
@@ -231,5 +223,4 @@ export class CentersSettingComponent implements OnInit {
       duration: 2000,
     });
   }
-
 }
