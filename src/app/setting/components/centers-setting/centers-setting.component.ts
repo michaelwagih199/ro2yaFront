@@ -10,28 +10,30 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import { CenterModel } from 'src/app/admin-home/models/center';
+import { DoctorModel } from 'src/app/admin-home/models/doctor';
+import { CenterService } from 'src/app/admin-home/services/center.service';
+import { DotorServiceService } from 'src/app/admin-home/services/dotor-service.service';
 import { ConfirmationDialog } from 'src/app/shared/components/layout/dialog/confirmation/confirmation.component';
-import { CenterModel } from '../../models/center';
-import { DoctorModel } from '../../models/doctor';
-import { CenterService } from '../../services/center.service';
-import { DotorServiceService } from '../../services/dotor-service.service';
+import { CenterSettingModel } from '../../models/centerModel';
+import { CentersSettingService } from '../../services/centers-setting.service';
 
 @Component({
-  selector: 'app-doctors',
-  templateUrl: './doctors.component.html',
-  styleUrls: ['./doctors.component.scss'],
+  selector: 'app-centers-setting',
+  templateUrl: './centers-setting.component.html',
+  styleUrls: ['./centers-setting.component.scss'],
 })
+export class CentersSettingComponent implements OnInit {
 
-
-export class DoctorsComponent implements OnInit {
-  
   validateForm!: FormGroup;
   isLoading: boolean = false;
   searchInout: any;
   selectedSearchFilter!: string;
   saveCheck: string = 'Save Center';
   myControl = new FormControl();
-  selectHospital!: number;
+  selectHospital!: CenterModel;
+  
+  centerSetting: CenterSettingModel = new CenterSettingModel();
 
   //for autocomplete
   options!: string[];
@@ -48,14 +50,13 @@ export class DoctorsComponent implements OnInit {
     private dialog: MatDialog,
     private _snackBar: MatSnackBar,
     private centerService: CenterService,
-    private doctorService: DotorServiceService,
+    private centerSettingService: CentersSettingService,
     private fb: FormBuilder,
     private modalService: NgbModal
   ) {}
 
   ngOnInit(): void {
     this.getNames();
-    this.retrievePagable();
     this.validateform();
     this.findAllHospital();
   }
@@ -71,7 +72,7 @@ export class DoctorsComponent implements OnInit {
    * data
    */
   getNames() {
-    this.doctorService.getNames().subscribe(
+    this.centerSettingService.getNames().subscribe(
       (response) => {
         this.options = response;
         this.filteredOptions = this.myControl.valueChanges.pipe(
@@ -106,25 +107,10 @@ export class DoctorsComponent implements OnInit {
     );
   }
 
-  retrievePagable() {
-    this.isLoading = true;
-    const params = this.getRequestParams(this.page, this.pageSize);
-    this.doctorService.getAllPagination(params).subscribe(
-      (data) => {
-        this.isLoading = false;
-        this.doctorList = data.doctors;
-        this.count = data.totalItems;
-      },
-      (error) => {
-        this.isLoading = false;
-        console.log(error);
-      }
-    );
-  }
 
   findByName() {
     this.isLoading = true;
-    this.doctorService.findByName(this.searchInout).subscribe(
+    this.centerSettingService.findByName(this.searchInout).subscribe(
       (data) => {
         this.isLoading = false;
         this.doctorList = data;
@@ -136,13 +122,6 @@ export class DoctorsComponent implements OnInit {
     );
   }
 
-  getDoctorByCenterId(value: number) {
-    this.isLoading = true;
-    this.doctorService.getDoctorByCenterId(value).subscribe((data) => {
-      this.isLoading = false;
-      this.doctorList = data;
-    });
-  }
 
   /**
    * events
@@ -155,35 +134,29 @@ export class DoctorsComponent implements OnInit {
   onSaveCenter() {
     if (this.saveCheck == 'Save Doctor') {
       this.isLoading = true;
-      this.doctorService.create(this.doctor, this.selectHospital).subscribe(
-        (data) => {
-          this.isLoading = false;
-          this.openSnackBar('Doctor Saved Succesfully', '');
-          this.refresh();
-          this.modalService.dismissAll();
-        },
-        (error) => {
-          this.isLoading = false;
-          console.log(error);
-        }
-      );
+    console.log(this.selectHospital.hospitalName);
+    
+      // this.centerSettingService.create(this.centerSetting).subscribe(
+      //   (data) => {
+      //     this.isLoading = false;
+      //     this.openSnackBar('Doctor Saved Succesfully', '');
+      //     this.refresh();
+      //     this.modalService.dismissAll();
+      //   },
+      //   (error) => {
+      //     this.isLoading = false;
+      //     console.log(error);
+      //   }
+      // );
     } else {
       //update
       this.isLoading = true;
-      this.doctorService
-        .update(this.doctor.id, this.doctor, this.selectHospital)
-        .subscribe((data) => {
-          this.isLoading = false
-          this.openSnackBar('Doctor Saved Succesfully', '');
-          this.refresh();
-          this.modalService.dismissAll();
-        });
+  
     }
   }
 
   refresh() {
     this.searchInout = '';
-    this.retrievePagable();
     this.getNames();
   }
 
@@ -199,7 +172,7 @@ export class DoctorsComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
       if (confirmed) {
-        this.doctorService.delete(element.id).subscribe(
+        this.centerSettingService.delete(element.id).subscribe(
           (data) => {
             this.openSnackBar(`Doctor Deleted Successfully`, '');
             this.refresh();
@@ -235,9 +208,6 @@ export class DoctorsComponent implements OnInit {
     this.findByName();
   }
 
-  onSearchFilterChange(value: number) {
-    this.getDoctorByCenterId(value);
-  }
 
   onSearchClick() {
     this.searchInout = '';
@@ -245,7 +215,8 @@ export class DoctorsComponent implements OnInit {
 
   validateform() {
     this.validateForm = this.fb.group({
-      doctorName: ['', [Validators.required]],
+      centeruserName: ['', [Validators.required]],
+      centerPassword: ['', [Validators.required]],
       center: ['', [Validators.required]],
     });
   }
@@ -261,23 +232,4 @@ export class DoctorsComponent implements OnInit {
     });
   }
 
-  page = 1;
-  count = 0;
-  pageSize = 6;
-  handlePageChange(event: any) {
-    this.page = event;
-    this.retrievePagable();
-  }
-
-  getRequestParams(page: any, pageSize: any) {
-    // tslint:disable-next-line:prefer-const
-    let params: any = {};
-    if (page) {
-      params[`page`] = page - 1;
-    }
-    if (pageSize) {
-      params[`size`] = pageSize;
-    }
-    return params;
-  }
 }

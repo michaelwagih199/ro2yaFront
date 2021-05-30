@@ -1,36 +1,23 @@
-<mat-card class="mat-elevation-z2 ">
+<mat-card class="mat-elevation-z2 m-2 ">
     <mat-card-header>
-        <div class="row container-fluid justify-content-around">   
-            
-            <div class="col-5 mt-1">
+        <div class="row container-fluid justify-content-around">
+
+            <div class="col mt-1">
                 <form>
                     <mat-form-field appearance="outline" class="full-width">
                         <mat-label>CenterSearch</mat-label>
                         <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto"
-                        [(ngModel)]="searchInout" (keyup.enter)="search()" (click)="onSearchClick()">
+                            [(ngModel)]="searchInout" (keyup.enter)="search()" (click)="onSearchClick()">
                         <mat-icon color="accent" matSuffix>search</mat-icon>
                         <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
                             <mat-option *ngFor="let option of filteredOptions | async" [value]="option"
-                            (click)="OnHumanSelected(searchInout)">
-                            {{option}}
-                        </mat-option>
-                    </mat-autocomplete>
-                </mat-form-field>
-            </form>
-        </div>
-        
-            <div class="col-3 mt-1">
-                <mat-form-field appearance="outline" class="full-width">
-                    <mat-label> Filter By Center </mat-label>
-                    <mat-select [(ngModel)]="selectedSearchFilter" (ngModelChange)="onSearchFilterChange($event)">
-                        <mat-option value="name" (click)="refresh()">All Data</mat-option>
-                        <mat-option *ngFor="let item of centerList" [value]="item.id">
-                            {{item.hospitalName}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
+                                (click)="OnHumanSelected(searchInout)">
+                                {{option}}
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </form>
             </div>
-
             <div class="col-2 mt-2">
                 <button mat-mini-fab color="accent" (click)="openSaveModal(content, doctor ,'Save Doctor')">
                     <mat-icon>add</mat-icon>
@@ -41,11 +28,10 @@
     <mat-card-content>
         <mat-progress-bar color="accent" mode="indeterminate" *ngIf="isLoading" value="20"></mat-progress-bar>
         <table mat-table
-            [dataSource]="doctorList | paginate: {itemsPerPage: pageSize, currentPage: page, totalItems:count}">
-
+            [dataSource]="doctorList">
             <!-- Name Column -->
             <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef> Name </th>
+                <th mat-header-cell *matHeaderCellDef> Center  </th>
                 <td mat-cell *matCellDef="let element"> {{element.doctorName}} </td>
             </ng-container>
 
@@ -54,9 +40,7 @@
                 <th mat-header-cell *matHeaderCellDef> Center </th>
                 <td mat-cell *matCellDef="let element"> {{element?.hospital?.hospitalName}} </td>
             </ng-container>
-
-
-
+            
             <ng-container matColumnDef="actions">
                 <th mat-header-cell *matHeaderCellDef> </th>
                 <td mat-cell *matCellDef="let element" class="action-link">
@@ -76,9 +60,6 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
 
-        <div class="text-center mt-3" style="direction: ltr;">
-            <pagination-controls (pageChange)="handlePageChange($event)"></pagination-controls>
-        </div>
     </mat-card-content>
 </mat-card>
 
@@ -91,25 +72,35 @@
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
+
         <div class="modal-body">
             <form nz-form [formGroup]="validateForm">
+
                 <mat-form-field class="full-width" appearance="outline">
-                    <mat-label> Doctor Name </mat-label>
-                    <input matInput required appearance="outline" class="full-width" placeholder="Center Name"
-                        type="text" formControlName="doctorName" [(ngModel)]="doctor.doctorName" autocomplete="off">
+                    <mat-label> Center User Name  </mat-label>
+                    <input matInput required appearance="outline" class="full-width" placeholder="Center User Name"
+                        type="text" formControlName="centeruserName" [(ngModel)]="centerSetting.centeruserName" autocomplete="off">
+                </mat-form-field>
+
+                <mat-form-field class="full-width" appearance="outline">
+                    <mat-label> Center Password</mat-label>
+                    <input matInput required appearance="outline" class="full-width" placeholder="Center Password"
+                        type="password" formControlName="centerPassword" [(ngModel)]="centerSetting.centerPassword" autocomplete="off">
                 </mat-form-field>
 
                 <div class="form-group">
                     <label for="exampleFormControlSelect1">Centers</label>
-                    <select class="form-control" required [(ngModel)]="selectHospital" formControlName="center" id="exampleFormControlSelect1">
-                        <option *ngFor="let item of centerList" [value]="item.id">
+                    <select class="form-control" required [(ngModel)]="selectHospital" formControlName="center"
+                        id="exampleFormControlSelect1">
+                        <option *ngFor="let item of centerList" [value]="item">
                             {{item?.hospitalName}}
                         </option>
                     </select>
                 </div>
-
             </form>
+
         </div>
+
         <div class="modal-footer">
             <button mat-raised-button color="primary" (click)="onSaveCenter()"
                 [disabled]="!validateForm.valid">{{saveCheck}}</button>
