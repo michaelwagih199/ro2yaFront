@@ -8,14 +8,11 @@ import {
 } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { CenterModel } from 'src/app/admin-home/models/center';
-import { CenterService } from 'src/app/admin-home/services/center.service';
 import { ConfirmationDialog } from 'src/app/shared/components/layout/dialog/confirmation/confirmation.component';
 import { PatientDataService } from 'src/app/admin-home/services/patient-data.service';
-import { StaticData } from 'src/app/_helpers/staticData';
 import { AddPatientComponent } from '../matDialog/add-patient/add-patient.component';
 import { Router } from '@angular/router';
 

@@ -142,8 +142,10 @@ export class PatientsCycleComponent implements OnInit {
       if (confirmed) {
         this.patientCycleService.delete(element.id).subscribe(
           (data) => {
+
             this.openSnackBar(`Center Deleted Successfully`, '');
             this.getPatintCycle();
+            this.cycleStatuesModel = new CycleStatuesModel()
           },
           (error) => {
             console.log(error);

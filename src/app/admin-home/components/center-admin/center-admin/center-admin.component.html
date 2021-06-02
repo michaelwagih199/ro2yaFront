@@ -1,0 +1,125 @@
+<div class="container_c">
+    <div class="header-c">
+        <p class="text-Header">I Care Center</p>
+    </div>
+    <div class="mainDive">
+        <div class="flex-container">
+            <div class="flex-item">
+                <form>
+                    <mat-form-field appearance="outline" class="full-width">
+                        <mat-label>CenterSearch</mat-label>
+                        <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto"
+                            [(ngModel)]="searchInout" (keyup.enter)="search()" (click)="onSearchClick()">
+                        <mat-icon color="accent" matSuffix>search</mat-icon>
+                        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                            <mat-option *ngFor="let option of filteredOptions | async" [value]="option"
+                                (click)="OnHumanSelected(searchInout)">
+                                {{option}}
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </form>
+            </div>
+
+            <div class="flex-item2">
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label> Search Filter </mat-label>
+                    <mat-select [(ngModel)]="selectedSearchFilter" (ngModelChange)="onSearchFilterChange($event)">
+                        <mat-option (click)="refresh()">All Data</mat-option>
+                        <mat-option value="name">Name</mat-option>
+                        <mat-option value="phone">Phone</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+        <!--end of flex -->
+        <div >
+            <mat-progress-bar color="accent" mode="indeterminate" *ngIf="isLoading" value="20"></mat-progress-bar>
+        </div>
+        
+        <table mat-table [dataSource]="centerAdminList">
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="patientCode">
+            <th mat-header-cell *matHeaderCellDef> Code </th>
+            <td mat-cell *matCellDef="let element"> {{element?.patientCycle?.patient?.patientCode}} </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="patientName">
+            <th mat-header-cell *matHeaderCellDef> Name </th>
+            <td mat-cell *matCellDef="let element"> {{element?.patientCycle?.patient?.patientName}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="patientIDNumber">
+            <th mat-header-cell *matHeaderCellDef> IDNumber </th>
+            <td mat-cell *matCellDef="let element">  {{element?.patientCycle?.patient?.patientIDNumber}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="phone">
+            <th mat-header-cell *matHeaderCellDef> Phone </th>
+            <td mat-cell *matCellDef="let element">  {{element?.patientCycle?.patient?.phone}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="voucherCode">
+            <th mat-header-cell *matHeaderCellDef> VoucherNo </th>
+            <td mat-cell *matCellDef="let element"> {{element?.patientCycle?.voucherNo}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="cycleStatues">
+            <th mat-header-cell *matHeaderCellDef> CycleStatues </th>
+            <td mat-cell *matCellDef="let element"> {{element?.cycleStatues}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef> </th>
+            <td mat-cell *matCellDef="let element" class="action-link">
+                <button mat-icon-button color="primary" >
+                    <mat-icon>create</mat-icon>
+                </button>|
+                <button mat-icon-button color="accent"  (click)="details(content,element)">
+                    <mat-icon>info</mat-icon>
+                </button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    </div>
+</div>
+
+<div>
+    <ng-template #content let-modal>
+        <div class="modal-header">
+            <h4 class="modal-title text-center" id="modal-basic-title">Details</h4>
+        </div>
+        <div class="modal-body">
+            <div class="mt-2" style="text-align: center;">
+                <!--table-->
+                <table class="table table-bordered font-m ">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>Injection Date</th>
+                            <th>Injection payment</th>
+                            <th>Injection Eye</th>
+                            <th>Oct Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of centerAdminDetailsList">
+                            <th>{{ item.patientCycle.injectionDate}}</th>
+                            <th>{{ item.patientCycle.injectionPayment }}</th>
+                            <th>{{ item.patientCycle.injectionEye}}</th>
+                            <th>{{ item.patientCycle.octDate}}</th>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline-dark" (click)="modal.close()">Close</button>
+        </div>
+    </ng-template>
+</div>

@@ -1,0 +1,31 @@
+<div class="login-wrap">
+    <div class="login-html">
+        <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Sign In</label>
+        <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab"></label>
+        <div class="login-form mt-4">
+            <div class="sign-in-htm">
+                <form [formGroup]="validateForm">
+                    <mat-progress-bar color="accent" mode="indeterminate" *ngIf="isLoading" value="20"></mat-progress-bar>
+                    <br>
+                    <div class="group">
+                        <label for="user" class="label">Username</label>
+                        <input id="user" type="text" class="input" formControlName="userName" [(ngModel)]="userName"
+                            required>
+                    </div>
+
+                    <div class="group">
+                        <label for="pass" class="label">Password</label>
+                        <input id="pass" type="password" class="input" data-type="password" formControlName="password"
+                            [(ngModel)]="password" required>
+                    </div>
+                </form>
+                <div class="group">
+                    <input type="submit" class="button" value="Sign In" [disabled]="!validateForm.valid"
+                        (click)="onLogin()">
+                </div>
+                <p class="text-white text-center mt-5">{{notifiacation}}</p>
+            </div>
+
+        </div>
+    </div>
+</div>

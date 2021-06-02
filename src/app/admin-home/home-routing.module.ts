@@ -7,8 +7,22 @@ import { LayoutComponent } from '../shared/components';
 import { AuthGaurdService } from '../core/services/auth-gaurd.service';
 import { AdminHomeComponent } from './components/home/home.component';
 import { CentersComponent } from './components/centers/centers.component';
+import { CenterLoginComponent } from './components/center-admin/dialogs/center-login/center-login.component';
+import { CenterAdminComponent } from './components/center-admin/center-admin/center-admin.component';
 
 const routes: Routes = [
+  {
+    path: 'centerAdmin',
+    component: CenterLoginComponent,
+    canActivate: [AuthGaurdService],
+  },
+
+  {
+    path: 'centerActions/:id',
+    component: CenterAdminComponent,
+    canActivate: [AuthGaurdService],
+  },
+  
   {
     path: '',
     component: LayoutComponent,
@@ -23,6 +37,7 @@ const routes: Routes = [
         component: CentersComponent,
         canActivate: [AuthGaurdService],
       },
+     
       {
         path: 'doctors',
         component: DoctorsComponent,

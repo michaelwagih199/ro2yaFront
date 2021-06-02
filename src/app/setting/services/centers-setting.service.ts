@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Injectable } from '@angular/core';
+import { logging } from 'protractor';
 
 @Injectable({
   providedIn: 'root',
@@ -33,6 +34,10 @@ export class CentersSettingService {
 
   delete(id: number): Observable<any> {
     return this.http.put(`${this.baseUrl}/archive?id=${id}`, null);
+  }
+  
+  loginToCenters(userName:any, password:any):Observable<any>{
+    return this.http.get(`${this.baseUrl}/login?username=${userName}&password=${password}`)
   }
   
 }

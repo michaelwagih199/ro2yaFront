@@ -5,8 +5,6 @@ import { SettingRoutingModule } from './setting-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { CentersSettingComponent } from './components/centers-setting/centers-setting.component';
 
-
-
 @NgModule({
   declarations: [SettingComponent, CentersSettingComponent],
   imports: [
