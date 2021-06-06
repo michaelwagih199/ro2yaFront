@@ -16,9 +16,7 @@
     <mat-card-content>
         <mat-progress-bar class="m-2" color="accent" mode="indeterminate" *ngIf="isLoading" value="20">
         </mat-progress-bar>
-
         <mat-table [dataSource]="patientCycleList" style="margin-top: 5px;">
-
             <ng-container matColumnDef="injectionDate">
                 <mat-header-cell *matHeaderCellDef> InjectionDate
                 </mat-header-cell>
@@ -78,18 +76,21 @@
 
         <table class="table mt-5">
             <thead class="thead-light">
-              <tr>
-                <th scope="col">Cycle Statues</th>
-                <th scope="col">Date</th>
-              </tr>
+                <tr>
+                    <th scope="col">Cycle Statues</th>
+                    <th scope="col">Date</th>
+                </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>{{cycleStatuesModel?.cycleStatues}}</td>
-                <td>{{cycleStatuesModel?.createdDate | date:'medium'}}</td>
-              </tr>
+                <tr>
+                    <td>{{cycleStatuesModel?.cycleStatues}}</td>
+                    <td>{{cycleStatuesModel?.createdDate | date:'medium'}}</td>
+                </tr>
             </tbody>
-          </table>
+        </table>
 
-        </mat-card-content>
+    </mat-card-content>
+   
 </mat-card>
+
+<app-patient-tests-report></app-patient-tests-report>

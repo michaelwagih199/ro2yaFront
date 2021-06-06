@@ -9,6 +9,7 @@ import { CenterAdminService } from '../../../services/center-admin.service';
 import { CenterAdminDataModel } from '../../../models/centerAdminModel';
 import { element } from 'protractor';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DataService } from '../../../../shared/service/data.service';
 
 @Component({
   selector: 'app-center-admin',
@@ -47,7 +48,8 @@ export class CenterAdminComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private modalService: NgbModal,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private dataServer:DataService
   ) {}
 
   ngOnInit(): void {
@@ -164,8 +166,7 @@ export class CenterAdminComponent implements OnInit {
     this.centerAdminDetailsList=[]
     this.modalService.open(content, { size: 'xl' });
     this.centerAdminDetailsList.push(item);
-    console.log(item.patientCycle.id);
-    
+    this.dataServer.changeMessage(item.patientCycle.patient.id);
   }
 
   OnHumanSelected(SelectedHuman: any) {

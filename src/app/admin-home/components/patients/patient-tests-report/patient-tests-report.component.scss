@@ -1,0 +1,19 @@
+$font:'El Messiri', sans-serif;
+
+.mat-card-header {
+    display: block;
+    background: #f6f6f6;
+    border-radius: 4px;
+    border: 1px solid #233238;
+    font-size: large;
+    text-align: center;
+  }
+  .mat-card{
+    margin-top: 3px;
+    margin-bottom: 3px;
+  }
+
+  .font-m{
+    font-family: $font;
+  
+  }

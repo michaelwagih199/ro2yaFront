@@ -15,10 +15,11 @@ import { AddPatientCycleComponent } from './components/patients/matDialog/add-pa
 import { CenterAdminComponent } from './components/center-admin/center-admin/center-admin.component';
 import { CenterLoginComponent } from './components/center-admin/dialogs/center-login/center-login.component';
 import { ChangeCycleStatuesComponent } from './components/center-admin/dialogs/change-cycle-statues/change-cycle-statues.component';
+import { PatientTestsReportComponent } from './components/patients/patient-tests-report/patient-tests-report.component';
 
 
 @NgModule({
-  declarations: [AdminHomeComponent, CentersComponent, DoctorsComponent, PatientsComponent, PatientsDataComponent, PatientsCycleComponent, AddPatientComponent, PatientDetailsComponent, AddPatientCycleComponent, CenterAdminComponent, CenterLoginComponent, ChangeCycleStatuesComponent],
+  declarations: [AdminHomeComponent, CentersComponent, DoctorsComponent, PatientsComponent, PatientsDataComponent, PatientsCycleComponent, AddPatientComponent, PatientDetailsComponent, AddPatientCycleComponent, CenterAdminComponent, CenterLoginComponent, ChangeCycleStatuesComponent, PatientTestsReportComponent],
   imports: [
     CommonModule,
     HomeRoutingModule,

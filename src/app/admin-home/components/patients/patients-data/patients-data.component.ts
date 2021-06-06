@@ -15,6 +15,7 @@ import { ConfirmationDialog } from 'src/app/shared/components/layout/dialog/conf
 import { PatientDataService } from 'src/app/admin-home/services/patient-data.service';
 import { AddPatientComponent } from '../matDialog/add-patient/add-patient.component';
 import { Router } from '@angular/router';
+import { DataService } from '../../../../shared/service/data.service';
 
 @Component({
   selector: 'app-patients-data',
@@ -47,6 +48,7 @@ export class PatientsDataComponent implements OnInit {
 
   constructor(
     private dialog: MatDialog,
+    private dataServer:DataService,
     private _snackBar: MatSnackBar,
     private patientService: PatientDataService,
     private fb: FormBuilder,
@@ -235,6 +237,8 @@ export class PatientsDataComponent implements OnInit {
 
   toInfo(id:number) {
     this.router.navigate([`admin/patientDetails/${id}`]);
+    this.dataServer.changeMessage(id);
+
   }
 
   OnHumanSelected(SelectedHuman: any) {
