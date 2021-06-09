@@ -14,8 +14,16 @@ export class CenterAdminService {
     return this.http.get(`${this.baseUrl}/hospital?hospitalId=${hospitalId}`);
   }
 
-  getCycleReportStatues(patientId:number,enjectionEye:any):Observable<any>{
-    return this.http.get(`${this.baseUrl}/injectionEye?patientId=${patientId}&eyeInjection=${enjectionEye}`)
+  getCycleReportStatues(patientId: number, enjectionEye: any): Observable<any> {
+    return this.http.get(
+      `${this.baseUrl}/injectionEye?patientId=${patientId}&eyeInjection=${enjectionEye}`
+    );
   }
 
+  updateCycleTestToDoneTest(cycleStatuesId: number): Observable<any> {
+    return this.http.put(
+      `${this.baseUrl}/testDone?cycleStatuesId=${cycleStatuesId}`,
+      null
+    );
+  }
 }

@@ -10,6 +10,7 @@ import { CenterAdminDataModel } from '../../../models/centerAdminModel';
 import { element } from 'protractor';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DataService } from '../../../../shared/service/data.service';
+import { PatientsModel } from 'src/app/admin-home/models/patients';
 
 @Component({
   selector: 'app-center-admin',
@@ -25,9 +26,10 @@ export class CenterAdminComponent implements OnInit {
   //for autocomplete
   options!: string[];
   centerAdminList!: CenterAdminDataModel[];
-  centerAdminDetailsList: CenterAdminDataModel[]=[];
+  centerAdminDetailsList: CenterAdminDataModel[] = [];
   hospitalId!: number;
   private routeSub!: Subscription;
+  centerAdminModel: CenterAdminDataModel = new CenterAdminDataModel();
 
   displayedColumns: string[] = [
     'patientCode',
@@ -49,7 +51,7 @@ export class CenterAdminComponent implements OnInit {
     private router: Router,
     private modalService: NgbModal,
     private route: ActivatedRoute,
-    private dataServer:DataService
+    private dataServer: DataService
   ) {}
 
   ngOnInit(): void {
@@ -115,6 +117,10 @@ export class CenterAdminComponent implements OnInit {
     );
   }
 
+  /**
+   * events
+   */
+
   findByName() {
     this.isLoading = true;
     this.patientService.findByName(this.searchInout).subscribe(
@@ -143,10 +149,6 @@ export class CenterAdminComponent implements OnInit {
     );
   }
 
-  /**
-   * events
-   */
-
   search() {
     if (this.selectedSearchFilter == 'name') this.findByName();
     else if (this.selectedSearchFilter == 'phone') this.findByPhone();
@@ -163,10 +165,30 @@ export class CenterAdminComponent implements OnInit {
   }
 
   details(content: any, item: CenterAdminDataModel) {
-    this.centerAdminDetailsList=[]
+    this.centerAdminDetailsList = [];
     this.modalService.open(content, { size: 'xl' });
     this.centerAdminDetailsList.push(item);
     this.dataServer.changeMessage(item.patientCycle.patient.id);
+  }
+
+  confirmation(content: any, element: CenterAdminDataModel) {
+    this.centerAdminModel = element;
+    this.modalService.open(content);
+  }
+
+  onupdateStatues() {
+    this.isLoading = true;
+    this.centerAdminService
+      .updateCycleTestToDoneTest(this.centerAdminModel.id)
+      .subscribe(
+        (data) => {
+          this.isLoading = false;
+          this.refresh();
+        },
+        (error) => {
+          console.log();
+        }
+      );
   }
 
   OnHumanSelected(SelectedHuman: any) {

@@ -17,32 +17,32 @@
 		<mat-sidenav #sidenav [mode]="isBiggerScreen() ? 'over' : 'side'" [(opened)]="opened" [fixedInViewport]="true"
 			[fixedTopGap]>
 			<mat-nav-list>
-				<a *ngIf="DynamicNavBar.saleOrder" mat-list-item [routerLink]="'/admin/patients'"
+				<a *ngIf="DynamicNavBar.patients" mat-list-item [routerLink]="'/admin/patients'"
 					(click)="addTitle('Patients')">
 					<mat-icon color="primary">person</mat-icon> Patients
 				</a>
 
-				<a *ngIf="DynamicNavBar.customers" mat-list-item [routerLink]="'/admin/centers'"
+				<a *ngIf="DynamicNavBar.centers" mat-list-item [routerLink]="'/admin/centers'"
 					(click)="addTitle('Centers')">
 					<mat-icon color="primary">medical_services</mat-icon> Centers
 				</a>
 
-				<a *ngIf="DynamicNavBar.stock" mat-list-item [routerLink]="'/admin/doctors'"
+				<a *ngIf="DynamicNavBar.medication" mat-list-item [routerLink]="'/admin/doctors'"
 					(click)="addTitle('Doctors')">
 					<mat-icon color="primary">medication</mat-icon> Doctors
 				</a>
 
-				<a *ngIf="DynamicNavBar.suppliers" mat-list-item [routerLink]="'/suppliers'"
+				<a *ngIf="DynamicNavBar.reports" mat-list-item [routerLink]="'/suppliers'"
 					(click)="addTitle('Reports')">
 					<mat-icon color="primary">auto_graph</mat-icon> Reports
 				</a>
 			
-				<a mat-list-item *ngIf="DynamicNavBar.suppliers" mat-list-item [routerLink]="'/admin/centerAdmin'"
+				<a mat-list-item *ngIf="DynamicNavBar.centerAdmin" mat-list-item [routerLink]="'/admin/centerAdmin'"
 					(click)="addTitle('CenterAdmin')">
 					<mat-icon color="primary">admin_panel_settings</mat-icon> Center Admin
 				</a>
 
-				<a mat-list-item *ngIf="DynamicNavBar.suppliers" mat-list-item [routerLink]="'/setting'"
+				<a mat-list-item *ngIf="DynamicNavBar.setting" mat-list-item [routerLink]="'/setting'"
 					(click)="addTitle('Setting')">
 					<mat-icon color="primary">settings</mat-icon> Setting
 				</a>

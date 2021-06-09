@@ -13,20 +13,18 @@ import { AboutAppDialogComponent } from '../dialog/about-app-dialog/about-app-di
 })
 export class NavBarComponent implements OnInit {
   userName: any;
-  
+
   DynamicNavBar = {
-    saleOrder: true,
-    stock: false,
-    customers: true,
-    suppliers: false,
-    purshasing: false,
-    retrival: true,
-    expenses: false,
-    reports: false,
-    setting: false,
+    patients: true,
+    centers: true,
+    medication: true,
+    centerAdmin: true,
+    reports: true,
+    setting: true,
   };
 
   opened = true;
+
   @ViewChild('sidenav', { static: true })
   sidenav!: MatSidenav;
   screenTitle: any;
@@ -41,16 +39,17 @@ export class NavBarComponent implements OnInit {
     let userPermission = sessionStorage.getItem('auth-permission');
     this.userName = sessionStorage.getItem('userName')?.toString();
     if (userPermission?.includes('fullPermission')) {
-      this.DynamicNavBar.expenses = true;
-      this.DynamicNavBar.stock = true;
-      this.DynamicNavBar.suppliers = true;
-      this.DynamicNavBar.purshasing = true;
-      this.DynamicNavBar.expenses = true;
       this.DynamicNavBar.reports = true;
       this.DynamicNavBar.setting = true;
       console.log(true);
     } else {
-      console.log(false);
+      this.DynamicNavBar.patients = false;
+      this.DynamicNavBar.centers = false;
+      this.DynamicNavBar.medication = false;
+      this.DynamicNavBar.reports = false;
+      this.DynamicNavBar.setting = false;
+      this.redirectTo('admin/centerAdmin')
+
     }
 
     console.log(window.innerWidth);
@@ -99,7 +98,7 @@ export class NavBarComponent implements OnInit {
     });
   }
 
-  addTitle(title:any){
+  addTitle(title: any) {
     this.screenTitle = title;
   }
 
