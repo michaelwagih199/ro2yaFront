@@ -6,6 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { authInterceptorProviders } from './_helpers/auth.interceptor';
 import { HttpClientModule } from '@angular/common/http';
+import { ExcelService } from './shared/service/excel.service';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,7 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserAnimationsModule,
     NgbModule,
   ],
-  providers: [authInterceptorProviders],
+  providers: [authInterceptorProviders,ExcelService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

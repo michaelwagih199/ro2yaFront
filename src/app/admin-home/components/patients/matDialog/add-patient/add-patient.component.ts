@@ -64,15 +64,16 @@ export class AddPatientComponent implements OnInit {
       phone2: ['', [Validators.required]],
       patientName: ['', [Validators.required]],
       patientIDNumber: ['', [Validators.required]],
-      comments: ['', null],
+      comments: ['', ],
       address: ['', [Validators.required]],
       governorate: ['', [Validators.required]],
       nationality: ['', [Validators.required]],
       indication: ['', [Validators.required]],
       diagnosedDate: ['', [Validators.required]],
       startingLucentisDate: ['', [Validators.required]],
-      previousTreatment: ['', null],
-      doctor: ['', null],
+      previousTreatment: ['',[Validators.required] ],
+      voiceMessageConsent: ['',[Validators.required] ],
+      doctor: ['', [Validators.required]],
     });
   }
 }

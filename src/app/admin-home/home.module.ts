@@ -16,10 +16,11 @@ import { CenterAdminComponent } from './components/center-admin/center-admin/cen
 import { CenterLoginComponent } from './components/center-admin/dialogs/center-login/center-login.component';
 import { ChangeCycleStatuesComponent } from './components/center-admin/dialogs/change-cycle-statues/change-cycle-statues.component';
 import { PatientTestsReportComponent } from './components/patients/patient-tests-report/patient-tests-report.component';
+import { CenterAdminReportsComponent } from './components/center-admin/center-admin-reports/center-admin-reports.component';
 
 
 @NgModule({
-  declarations: [AdminHomeComponent, CentersComponent, DoctorsComponent, PatientsComponent, PatientsDataComponent, PatientsCycleComponent, AddPatientComponent, PatientDetailsComponent, AddPatientCycleComponent, CenterAdminComponent, CenterLoginComponent, ChangeCycleStatuesComponent, PatientTestsReportComponent],
+  declarations: [AdminHomeComponent, CentersComponent, DoctorsComponent, PatientsComponent, PatientsDataComponent, PatientsCycleComponent, AddPatientComponent, PatientDetailsComponent, AddPatientCycleComponent, CenterAdminComponent, CenterLoginComponent, ChangeCycleStatuesComponent, PatientTestsReportComponent, CenterAdminReportsComponent],
   imports: [
     CommonModule,
     HomeRoutingModule,

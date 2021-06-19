@@ -11,6 +11,7 @@ import { element } from 'protractor';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DataService } from '../../../../shared/service/data.service';
 import { PatientsModel } from 'src/app/admin-home/models/patients';
+import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-center-admin',
@@ -30,6 +31,7 @@ export class CenterAdminComponent implements OnInit {
   hospitalId!: number;
   private routeSub!: Subscription;
   centerAdminModel: CenterAdminDataModel = new CenterAdminDataModel();
+  centerName: any;
 
   displayedColumns: string[] = [
     'patientCode',
@@ -57,6 +59,7 @@ export class CenterAdminComponent implements OnInit {
   ngOnInit(): void {
     this.getNames();
     this.getPatientId();
+    this.centerName = localStorage.getItem('userName');
   }
 
   getPatientId() {
@@ -104,6 +107,10 @@ export class CenterAdminComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  viewReport() {
+    this.reloadPage(this.hospitalId);
   }
 
   getAllActivePatient(hospitalId: number) {
@@ -207,6 +214,10 @@ export class CenterAdminComponent implements OnInit {
 
   onSearchClick() {
     this.searchInout = '';
+  }
+
+  reloadPage(id: any) {
+    this.router.navigateByUrl(`/admin/centerReport/${id}`);
   }
 
   /**

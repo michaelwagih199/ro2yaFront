@@ -67,7 +67,6 @@
                 </div>
 
                 <div class="col">
-
                     <mat-form-field class="full-width" appearance="outline">
                         <mat-label>Gender</mat-label>
                         <mat-select matNativeControl required [(ngModel)]="patient.gender" formControlName="gender">
@@ -75,9 +74,7 @@
                             <mat-option value="Female">Female</mat-option>
                         </mat-select>
                     </mat-form-field>
-
                 </div>
-
             </div>
             <!--second row-->
             <div class="row">
@@ -123,14 +120,14 @@
                 <div class="col">
                     <mat-form-field class="full-width" appearance="outline">
                         <mat-label> Comments </mat-label>
-                        <input matInput required appearance="outline" class="full-width" placeholder="comments"
+                        <input matInput  appearance="outline" class="full-width" placeholder="comments"
                             type="text" formControlName="comments" [(ngModel)]="patient.comments" autocomplete="off">
                     </mat-form-field>
                 </div>
                 <div class="col">
                     <mat-form-field class="full-width" appearance="outline">
                         <mat-label> PreviousTreatment </mat-label>
-                        <input matInput appearance="outline" class="full-width" placeholder="previousTreatment"
+                        <input matInput required appearance="outline" class="full-width" placeholder="previousTreatment"
                             type="text" formControlName="previousTreatment" [(ngModel)]="patient.previousTreatment"
                             autocomplete="off">
                     </mat-form-field>
@@ -147,7 +144,16 @@
                         </mat-select>
                     </mat-form-field>
                 </div>
-
+                
+                <div class="col">
+                    <mat-form-field class="full-width" appearance="outline">
+                        <mat-label>Message Consent</mat-label>
+                        <mat-select matNativeControl required [(ngModel)]="patient.voiceMessageConsent" formControlName="voiceMessageConsent">
+                            <mat-option value="Done">Done</mat-option>
+                            <mat-option value="Note Done">Not Done</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
             </div>
         </div>
     </form>

@@ -14,11 +14,17 @@ export class CenterAdminService {
     return this.http.get(`${this.baseUrl}/hospital?hospitalId=${hospitalId}`);
   }
 
+  getTestedDoneWithinDate(hospitalID:any,start: any,end:any): Observable<any> {
+    return this.http.get(`${this.baseUrl}/hospital/TestedDone?hospitalId=${hospitalID}&start=${start}&end=${end}`);
+  }
+
   getCycleReportStatues(patientId: number, enjectionEye: any): Observable<any> {
     return this.http.get(
       `${this.baseUrl}/injectionEye?patientId=${patientId}&eyeInjection=${enjectionEye}`
     );
   }
+
+
 
   updateCycleTestToDoneTest(cycleStatuesId: number): Observable<any> {
     return this.http.put(

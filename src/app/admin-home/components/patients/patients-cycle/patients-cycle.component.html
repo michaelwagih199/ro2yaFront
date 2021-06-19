@@ -20,7 +20,7 @@
             <ng-container matColumnDef="injectionDate">
                 <mat-header-cell *matHeaderCellDef> InjectionDate
                 </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.injectionDate}} </mat-cell>
+                <mat-cell *matCellDef="let element"> {{element.injectionDate| date: 'dd/MM/yyyy' }} </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="injectionPayment">
@@ -45,7 +45,7 @@
 
             <ng-container matColumnDef="octDate">
                 <mat-header-cell *matHeaderCellDef> OCT Date</mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.octDate}} </mat-cell>
+                <mat-cell *matCellDef="let element"> {{element.octDate |date: 'dd/MM/yyyy'}} </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="comment">

@@ -40,6 +40,7 @@ export class CenterLoginComponent implements OnInit {
           this.isLoading = false;
           if (data.message == 'bass user') {
             this.reloadPage(data.object.hospital.id);
+            localStorage.setItem('userName', data.object.centeruserName);
           } else {
             this.notifiacation = 'Please Check UserName Or Password';
           }

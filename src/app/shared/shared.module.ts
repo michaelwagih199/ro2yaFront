@@ -8,7 +8,6 @@ import * as fromComponents from './components';
 import { NgMaterialModule } from './components/ng-material/ng-material.module';
 import { ConfirmationDialog } from './components/layout/dialog/confirmation/confirmation.component';
 import { AboutAppDialogComponent } from './components/layout/dialog/about-app-dialog/about-app-dialog.component';
-import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 
 
 @NgModule({
@@ -22,7 +21,6 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
     RouterModule,
     NgMaterialModule,
     NgxPaginationModule,
-    NgxMatSelectSearchModule,
    ],
   exports: [   
     CommonModule,
@@ -32,7 +30,6 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
     CommonModule,
     NgMaterialModule,
     NgxPaginationModule,
-    
   ]
 })
 export class SharedModule { }

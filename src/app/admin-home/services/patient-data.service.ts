@@ -28,6 +28,11 @@ export class PatientDataService {
     return this.http.get(`${this.baseUrl}/phones`);
   }
 
+  getIdNumbers():Observable<any> {
+    return this.http.get(`${this.baseUrl}/IDNumbers`);
+  }
+
+
   findById(id: number) :Observable<any> {
     return this.http.get(`${this.baseUrl}/${id}`);
   }
@@ -39,6 +44,11 @@ export class PatientDataService {
   findByPhone(phone:any):Observable<any> {
     return this.http.get(`${this.baseUrl}/phone?phone=${phone}`);
   }
+
+  findByIdNumber(idNumber:any):Observable<any> {
+    return this.http.get(`${this.baseUrl}/patientIDNumber?idNumber=${idNumber}`);
+  }
+
 
   create(object: any,doctorId:number): Observable<any>  {
     return this.http.post(`${this.baseUrl}?doctorId=${doctorId}`, object);

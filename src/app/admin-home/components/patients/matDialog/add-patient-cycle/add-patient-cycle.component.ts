@@ -4,11 +4,14 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CenterModel } from '../../../../models/center';
 import { CenterService } from '../../../../services/center.service';
 import { PatientCycleModel } from '../../../../models/patientCycle';
+import { MAT_DATE_FORMATS } from '@angular/material/core';
+
 
 @Component({
   selector: 'app-add-patient-cycle',
   templateUrl: './add-patient-cycle.component.html',
   styleUrls: ['./add-patient-cycle.component.scss'],
+ 
 })
 export class AddPatientCycleComponent implements OnInit {
   validateForm!: FormGroup;
@@ -42,6 +45,7 @@ export class AddPatientCycleComponent implements OnInit {
   }
 
   save() {
+    console.log(this.patient);
     let data = {
       model: this.patient,
       centerId: this.centerId,

@@ -1,10 +1,10 @@
 <h2 mat-dialog-title>Save Cycle</h2>
 <mat-dialog-content>
+
     <form [formGroup]="validateForm">
         <div class="container-fluid">
             <div class="row">
                 <div class="col">
-
                     <mat-form-field appearance="fill">
                         <mat-label> Lucentis Injection Date </mat-label>
                         <input matInput required [matDatepicker]="picker" formControlName="injectionDate"
@@ -13,7 +13,6 @@
                         <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>
                 </div>
-
                 <div class="col">
                     <mat-form-field class="full-width" appearance="outline">
                         <mat-label>Injection Payment</mat-label>
@@ -25,7 +24,6 @@
                         </mat-select>
                     </mat-form-field>
                 </div>
-
                 <div class="col">
                     <mat-form-field class="full-width" appearance="outline">
                         <mat-label>Injection Eye</mat-label>
@@ -36,10 +34,10 @@
                         </mat-select>
                     </mat-form-field>
                 </div>
-
             </div>
+            
             <div class="row">
-
+            
                 <div class="col">
                     <mat-form-field class="full-width" appearance="outline">
                         <mat-label>Hospital</mat-label>
@@ -69,6 +67,7 @@
                         <mat-datepicker #octDate></mat-datepicker>
                     </mat-form-field>
                 </div>
+                
             </div>
             
             <mat-form-field appearance="outline" class="full-width" >

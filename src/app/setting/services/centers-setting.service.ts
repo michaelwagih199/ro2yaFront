@@ -2,12 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Injectable } from '@angular/core';
-import { logging } from 'protractor';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CentersSettingService {
+  
   private baseUrl = `${environment.baseUrl}/settings/centers`;
 
   constructor(private http: HttpClient) {}

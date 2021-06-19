@@ -1,6 +1,6 @@
 <div class="container_c">
     <div class="header-c">
-        <p class="text-Header">I Care Center</p>
+        <p class="text-Header">{{centerName}}</p>
     </div>
     <div class="mainDive">
         <div class="flex-container">
@@ -19,6 +19,9 @@
                         </mat-autocomplete>
                     </mat-form-field>
                 </form>
+            </div>
+            <div class="flex-item">
+                <button mat-raised-button color="primary" class="mt-2" (click)="viewReport()"> Reports </button>
             </div>
 
             <!-- <div class="flex-item2">

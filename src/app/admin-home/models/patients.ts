@@ -12,6 +12,7 @@ export class PatientsModel {
     comments!: string
     address!: string
     governorate!: string
+    voiceMessageConsent!: string
     previousTreatment!: string
     nationality!: string
     indication!: string

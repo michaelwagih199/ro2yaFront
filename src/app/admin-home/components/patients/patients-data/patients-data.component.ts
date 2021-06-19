@@ -48,7 +48,7 @@ export class PatientsDataComponent implements OnInit {
 
   constructor(
     private dialog: MatDialog,
-    private dataServer:DataService,
+    private dataServer: DataService,
     private _snackBar: MatSnackBar,
     private patientService: PatientDataService,
     private fb: FormBuilder,
@@ -72,6 +72,21 @@ export class PatientsDataComponent implements OnInit {
    */
   getNames() {
     this.patientService.getNames().subscribe(
+      (response) => {
+        this.options = response;
+        this.filteredOptions = this.myControl.valueChanges.pipe(
+          startWith(''),
+          map((value) => this._filter(value))
+        );
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  getIdNumbers() {
+    this.patientService.getIdNumbers().subscribe(
       (response) => {
         this.options = response;
         this.filteredOptions = this.myControl.valueChanges.pipe(
@@ -144,6 +159,20 @@ export class PatientsDataComponent implements OnInit {
     );
   }
 
+  findByIdNumber() {
+    this.isLoading = true;
+    this.patientService.findByIdNumber(this.searchInout).subscribe(
+      (data) => {
+        this.isLoading = false;
+        this.patientList = data;
+      },
+      (error) => {
+        this.isLoading = false;
+        console.log(error);
+      }
+    );
+  }
+
   /**
    * events
    */
@@ -151,6 +180,7 @@ export class PatientsDataComponent implements OnInit {
   search() {
     if (this.selectedSearchFilter == 'name') this.findByName();
     else if (this.selectedSearchFilter == 'phone') this.findByPhone();
+    else if (this.selectedSearchFilter == 'idNumber') this.findByIdNumber();
   }
 
   refresh() {
@@ -235,24 +265,24 @@ export class PatientsDataComponent implements OnInit {
     });
   }
 
-  toInfo(id:number) {
+  toInfo(id: number) {
     this.router.navigate([`admin/patientDetails/${id}`]);
     this.dataServer.changeMessage(id);
-
   }
 
   OnHumanSelected(SelectedHuman: any) {
     this.searchInout = SelectedHuman;
     if (this.selectedSearchFilter == 'name') this.findByName();
     else if (this.selectedSearchFilter == 'phone') this.findByPhone();
+    else if (this.selectedSearchFilter == 'idNumber') this.findByIdNumber();
   }
 
   onSearchFilterChange(value: string) {
     if (value == 'name') {
       this.getNames();
-    } else {
+    } else if (value == 'phone') {
       this.getPhones();
-    }
+    } else this.getIdNumbers();
   }
 
   onSearchClick() {
@@ -272,7 +302,7 @@ export class PatientsDataComponent implements OnInit {
 
   page = 1;
   count = 0;
-  pageSize = 6;
+  pageSize = 15;
   handlePageChange(event: any) {
     this.page = event;
     this.retrievePagable();
