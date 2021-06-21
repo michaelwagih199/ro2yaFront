@@ -8,6 +8,7 @@ import * as fromComponents from './components';
 import { NgMaterialModule } from './components/ng-material/ng-material.module';
 import { ConfirmationDialog } from './components/layout/dialog/confirmation/confirmation.component';
 import { AboutAppDialogComponent } from './components/layout/dialog/about-app-dialog/about-app-dialog.component';
+import { NgZorroModule } from './components/ng-zorro/ng-zorro.module';
 
 
 @NgModule({
@@ -21,6 +22,7 @@ import { AboutAppDialogComponent } from './components/layout/dialog/about-app-di
     RouterModule,
     NgMaterialModule,
     NgxPaginationModule,
+    NgZorroModule,
    ],
   exports: [   
     CommonModule,
@@ -30,6 +32,7 @@ import { AboutAppDialogComponent } from './components/layout/dialog/about-app-di
     CommonModule,
     NgMaterialModule,
     NgxPaginationModule,
+    NgZorroModule,
   ]
 })
 export class SharedModule { }

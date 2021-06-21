@@ -20,17 +20,17 @@
             <ng-container matColumnDef="injectionDate">
                 <mat-header-cell *matHeaderCellDef> InjectionDate
                 </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.injectionDate| date: 'dd/MM/yyyy' }} </mat-cell>
+                <mat-cell *matCellDef="let element"> {{element?.injectionDate| date: 'dd/MM/yyyy' }} </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="injectionPayment">
                 <mat-header-cell *matHeaderCellDef>InjectionPayment </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.injectionPayment}} </mat-cell>
+                <mat-cell *matCellDef="let element"> {{element?.injectionPayment}} </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="injectionEye">
                 <mat-header-cell *matHeaderCellDef> injectionEye</mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.injectionEye}} </mat-cell>
+                <mat-cell *matCellDef="let element"> {{element?.injectionEye}} </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="centerId">
@@ -40,17 +40,17 @@
 
             <ng-container matColumnDef="voucherNo">
                 <mat-header-cell *matHeaderCellDef> VoucherNo</mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.voucherNo}} </mat-cell>
+                <mat-cell *matCellDef="let element"> {{element?.voucherNo}} </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="octDate">
                 <mat-header-cell *matHeaderCellDef> OCT Date</mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.octDate |date: 'dd/MM/yyyy'}} </mat-cell>
+                <mat-cell *matCellDef="let element"> {{element?.octDate |date: 'dd/MM/yyyy'}} </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="comment">
                 <mat-header-cell *matHeaderCellDef> Comment</mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.comment}} </mat-cell>
+                <mat-cell *matCellDef="let element"> {{element?.comment}} </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="actions">

@@ -234,6 +234,8 @@ export class PatientsDataComponent implements OnInit {
         (data) => {
           this.openSnackBar('Patient Saved Successfully', '');
           this.retrievePagable();
+          this.toInfo(data.id);
+          this.dialog.closeAll();
         },
         (error) => {
           console.log(error);
@@ -257,6 +259,7 @@ export class PatientsDataComponent implements OnInit {
           (data) => {
             this.openSnackBar('Patient Saved Successfully', '');
             this.retrievePagable();
+            this.dialog.closeAll();
           },
           (error) => {
             console.log(error);

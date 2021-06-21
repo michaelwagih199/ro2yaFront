@@ -166,13 +166,13 @@ export class PatientsCycleComponent implements OnInit {
     this.dialog.open(AddPatientCycleComponent, dialogConfig);
     const dialogRef = this.dialog.open(AddPatientCycleComponent, dialogConfig);
     dialogRef.afterClosed().subscribe((data) => {
-      console.log(data);
       this.patientCycleService
-        .update(data.model.id, data.model, data.centerId, this.patientId)
+        .update(element.id, data.model, data.centerId, this.patientId)
         .subscribe(
           (data) => {
             this.openSnackBar('Patient Saved Successfully', '');
             this.getPatintCycle();
+            this.dialog.closeAll();
           },
           (error) => {
             console.log(error);

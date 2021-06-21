@@ -1,5 +1,7 @@
 <h2 mat-dialog-title>Save Patient</h2>
 <mat-dialog-content>
+    <mat-progress-bar color="accent" mode="indeterminate" *ngIf="isLoading" value="20"></mat-progress-bar>
+
     <form [formGroup]="validateForm">
         <div class="container-fluid">
             <div class="row">
@@ -63,7 +65,6 @@
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
-
                 </div>
 
                 <div class="col">
@@ -120,8 +121,8 @@
                 <div class="col">
                     <mat-form-field class="full-width" appearance="outline">
                         <mat-label> Comments </mat-label>
-                        <input matInput  appearance="outline" class="full-width" placeholder="comments"
-                            type="text" formControlName="comments" [(ngModel)]="patient.comments" autocomplete="off">
+                        <input matInput appearance="outline" class="full-width" placeholder="comments" type="text"
+                            formControlName="comments" [(ngModel)]="patient.comments" autocomplete="off">
                     </mat-form-field>
                 </div>
                 <div class="col">
@@ -136,19 +137,19 @@
                 <div class="col">
                     <mat-form-field class="full-width" appearance="outline">
                         <mat-label>Doctor</mat-label>
-                        <mat-select matNativeControl required [(ngModel)]="doctorId"
-                            formControlName="doctor">
+                        <mat-select matNativeControl required [(ngModel)]="doctorId" formControlName="doctor">
                             <mat-option *ngFor="let item of doctorList" [value]="item.id">
                                 {{item.doctorName}}
                             </mat-option>
                         </mat-select>
-                    </mat-form-field>
+                    </mat-form-field>                   
                 </div>
-                
+
                 <div class="col">
                     <mat-form-field class="full-width" appearance="outline">
                         <mat-label>Message Consent</mat-label>
-                        <mat-select matNativeControl required [(ngModel)]="patient.voiceMessageConsent" formControlName="voiceMessageConsent">
+                        <mat-select matNativeControl required [(ngModel)]="patient.voiceMessageConsent"
+                            formControlName="voiceMessageConsent">
                             <mat-option value="Done">Done</mat-option>
                             <mat-option value="Note Done">Not Done</mat-option>
                         </mat-select>
@@ -160,6 +161,6 @@
 
 </mat-dialog-content>
 <mat-dialog-actions align="center">
-    <button mat-raised-button (click)="save()" [disabled]="!validateForm.valid">Save</button>
+    <button mat-raised-button  color="accent" (click)="save()" [disabled]="!validateForm.valid">Save</button>
     <button mat-raised-button color="primary" (click)="close()" tabindex="1">Cancel</button>
 </mat-dialog-actions>
