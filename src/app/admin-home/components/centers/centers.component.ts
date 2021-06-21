@@ -267,7 +267,7 @@ export class CentersComponent implements OnInit {
 
   page = 1;
   count = 0;
-  pageSize = 6;
+  pageSize = 15;
   handlePageChange(event: any) {
     this.page = event;
     this.retrieveProductsPagable();

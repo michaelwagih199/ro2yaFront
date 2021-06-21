@@ -15,4 +15,8 @@ export class ExportPatientService {
     return this.http.get(`${this.baseUrl}/exportPatients`);
   }
 
+  exportCycles(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/exportCycles`);
+  }
+
 }

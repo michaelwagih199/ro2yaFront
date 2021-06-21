@@ -121,7 +121,7 @@
             <div class="customClass">
                 <p>Date diagnosed </p>
                 <mat-divider></mat-divider>
-                <p class="text-center text-white font-weight-bold">{{patient?.diagnosedDate}}</p>
+                <p class="text-center text-white font-weight-bold">{{patient?.diagnosedDate | date: 'dd/MM/yyyy' }}</p>
             </div>
         </div>
 
@@ -129,7 +129,7 @@
             <div class="customClass">
                 <p>Date starting Lucentis</p>
                 <mat-divider></mat-divider>
-                <p class="text-center text-white font-weight-bold">{{patient?.startingLucentisDate}}</p>
+                <p class="text-center text-white font-weight-bold">{{patient?.startingLucentisDate | date: 'dd/MM/yyyy' }}</p>
             </div>
         </div>
         <div class="col-3">
