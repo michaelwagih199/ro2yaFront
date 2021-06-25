@@ -1,10 +1,10 @@
-$font:'El Messiri', sans-serif;
+$font: "El Messiri", sans-serif;
 .container_c {
   width: 100%;
   height: 100%;
   background-color: #cccccc;
   background-size: cover;
-background-image: url('https://cdn.pixabay.com/photo/2012/08/27/14/19/mountains-55067_960_720.png');
+  background-image: url("https://cdn.pixabay.com/photo/2012/08/27/14/19/mountains-55067_960_720.png");
   position: absolute;
   .mainDive {
     width: 90%;
@@ -19,37 +19,38 @@ background-image: url('https://cdn.pixabay.com/photo/2012/08/27/14/19/mountains-
     border-radius: 20px;
     // border: 1px solid #656262;
     text-align: center;
-  }
-  
-  .header-c{
-      position: absolute;
-      background-color: #656262;
-      width: 60%;
-      height: 70px;
-      top: 0; left: 0; right: 0;
-      margin: auto;
-      margin-top: 1%;
-      border: 2px solid #cccccc;
-      border-radius: 20px;
-      z-index: 1;
-      .text-Header{
-        text-align: center;
-        font-family: $font;
-        color: #E5E5E5;
-        font-size:x-large;
-        margin-top: 20px;
-      }
+    overflow: auto;
   }
 
+  .header-c {
+    position: absolute;
+    background-color: #656262;
+    width: 60%;
+    height: 60px;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    margin-top: 1%;
+    border: 2px solid #cccccc;
+    border-radius: 20px;
+    z-index: 1;
+    .text-Header {
+      text-align: center;
+      font-family: $font;
+      color: #e5e5e5;
+      font-size: x-large;
+      margin-top: 20px;
+    }
+  }
 }
-.mat-form-field{
+.mat-form-field {
   font-family: $font;
 }
 .flex-container {
   /* We frst create a flex layout context */
   display: flex;
   width: 100%;
-  margin-top: 3% ;
   flex-flow: row wrap;
   /* Then we define how is distributed the remaining space */
   justify-content: space-around;
@@ -66,12 +67,18 @@ background-image: url('https://cdn.pixabay.com/photo/2012/08/27/14/19/mountains-
   flex-shrink: 2;
   margin: 0px 4px;
 }
-.mat-header-cell,.mat-cell{
+.mat-header-cell,
+.mat-cell {
   font-family: $font;
   text-align: center;
 }
 
-.font-m{
+.font-m {
   font-family: $font;
+}
+
+.bg-custom{
+  background-color: #eeeeee;
+  border: 1px solid #656262;
 
 }

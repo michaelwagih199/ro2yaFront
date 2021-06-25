@@ -13,13 +13,16 @@ import {
   FormControl,
 } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatSelect } from '@angular/material/select';
-import { ReplaySubject, Subject } from 'rxjs';
-import { take, takeUntil } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 import { DoctorModel } from 'src/app/admin-home/models/doctor';
 import { PatientsModel } from 'src/app/admin-home/models/patients';
 import { DotorServiceService } from 'src/app/admin-home/services/dotor-service.service';
 import { StaticData } from 'src/app/_helpers/staticData';
+
+export interface User {
+  name: string;
+}
 
 @Component({
   selector: 'app-add-patient',
@@ -30,9 +33,11 @@ export class AddPatientComponent implements OnInit {
   isLoading: boolean = false;
   validateForm!: FormGroup;
   patient: PatientsModel = new PatientsModel();
-  doctorId!: number;
+  doctorId!: DoctorModel;
   governorates = StaticData.governorates;
   doctorList!: DoctorModel[];
+  filteredOptions!: Observable<DoctorModel[]>;
+  options!: DoctorModel[];
 
   constructor(
     private fb: FormBuilder,
@@ -42,34 +47,58 @@ export class AddPatientComponent implements OnInit {
   ) {
     if (data != null) {
       this.patient = data;
-      this.doctorId = data.doctor.id;
+      this.doctorId = data.doctor;
     } else {
     }
   }
 
   ngOnInit() {
-    this.isLoading = true;
     this.validateform();
+    this.getNames();
+  }
+
+  getNames() {
+    this.isLoading = true;
     this.doctorService.findAll().subscribe(
-      (data) => {
+      (response) => {
         this.isLoading = false;
-        this.doctorList = data;
+        this.options = response;
+
+        this.filteredOptions = this.validateForm.controls['doctor'].valueChanges
+        .pipe(
+          startWith(''),
+          map(value => typeof value === 'string' ? value : value.doctorName),
+          map(name => name ? this._filter(name) : this.options.slice())
+        );
+        
       },
       (error) => {
-        this.isLoading = false;
         console.log(error);
       }
     );
+  }
+
+  displayFn(user: DoctorModel): string {
+    return user && user.doctorName ? user.doctorName : '';
+  }
+
+  private _filter(name: string): DoctorModel[] {
+    const filterValue = name.toLowerCase();
+    return this.options.filter(option => option.doctorName.toLowerCase().indexOf(filterValue) === 0);
+  }
+
+  OnHumanSelected(SelectedHuman: any) {
+    this.doctorId = SelectedHuman;
+    console.log(SelectedHuman);
     
   }
 
- 
 
 
   save() {
     let data = {
       model: this.patient,
-      doctorId: this.doctorId,
+      doctorId: this.doctorId.id,
     };
     this.dialogRef.close(data);
     // this.dialogRef.close();

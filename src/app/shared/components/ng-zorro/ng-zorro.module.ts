@@ -69,6 +69,8 @@ import en from '@angular/common/locales/en';
 import { NzTransButtonModule } from 'ng-zorro-antd/core/trans-button';
 import { NzWaveModule } from 'ng-zorro-antd/core/wave';
 import { NzNoAnimationModule } from 'ng-zorro-antd/core/no-animation';
+import { NzImageModule } from 'ng-zorro-antd/image';
+
 registerLocaleData(en);
 const antDesignIcons = AllIcons as {
   [key: string]: IconDefinition;
@@ -141,7 +143,8 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesign
     NzTreeSelectModule,
     NzTypographyModule,
     NzUploadModule,
-    NzResizableModule
+    NzResizableModule,
+    NzImageModule
   ],
   exports: [
     NzAffixModule,
@@ -208,7 +211,8 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesign
     NzTypographyModule,
     NzUploadModule,
     NzWaveModule,
-    NzResizableModule
+    NzResizableModule,
+    NzImageModule
   ],
   providers: [
     { provide: NZ_I18N, useValue: en_US },

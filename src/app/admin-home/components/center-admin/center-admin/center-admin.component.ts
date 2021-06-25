@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable, Subscription } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
+import { filter, map, startWith } from 'rxjs/operators';
 import { PatientDataService } from 'src/app/admin-home/services/patient-data.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CenterAdminService } from '../../../services/center-admin.service';
@@ -12,6 +12,9 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DataService } from '../../../../shared/service/data.service';
 import { PatientsModel } from 'src/app/admin-home/models/patients';
 import { ThrowStmt } from '@angular/compiler';
+import { NzUploadFile } from 'ng-zorro-antd/upload';
+import { HttpClient, HttpRequest, HttpResponse } from '@angular/common/http';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-center-admin',
@@ -53,7 +56,8 @@ export class CenterAdminComponent implements OnInit {
     private router: Router,
     private modalService: NgbModal,
     private route: ActivatedRoute,
-    private dataServer: DataService
+    private dataServer: DataService,
+    private http: HttpClient, private msg: NzMessageService
   ) {}
 
   ngOnInit(): void {
@@ -181,21 +185,24 @@ export class CenterAdminComponent implements OnInit {
   confirmation(content: any, element: CenterAdminDataModel) {
     this.centerAdminModel = element;
     this.modalService.open(content);
+    this.isUploadImpty = true;
+    this.fileList = [];
   }
 
   onupdateStatues() {
     this.isLoading = true;
-    this.centerAdminService
-      .updateCycleTestToDoneTest(this.centerAdminModel.id)
-      .subscribe(
-        (data) => {
-          this.isLoading = false;
-          this.refresh();
-        },
-        (error) => {
-          console.log();
-        }
-      );
+    // this.centerAdminService
+    //   .updateCycleTestToDoneTest(this.centerAdminModel.id)
+    //   .subscribe(
+    //     (data) => {
+    //       this.isLoading = false;
+    //       this.refresh();
+    //     },
+    //     (error) => {
+    //       console.log();
+    //     }
+    //   );
+    
   }
 
   OnHumanSelected(SelectedHuman: any) {
@@ -230,4 +237,44 @@ export class CenterAdminComponent implements OnInit {
       duration: 2000,
     });
   }
+
+
+  /**upload file */
+  uploading = false;
+  fileList: NzUploadFile[] = [];
+  isUploadImpty:boolean = true;
+
+  beforeUpload = (file: NzUploadFile): boolean => {
+    this.isUploadImpty = false; 
+    this.fileList = this.fileList.concat(file);
+    return false;
+  };
+
+  handleUpload(): void {
+    const formData = new FormData();
+    // tslint:disable-next-line:no-any
+    this.fileList.forEach((file: any) => {
+      formData.append('file', file);
+    });
+    this.uploading = true;
+    // You can use any AJAX library you like
+    const req = new HttpRequest('POST', 'http://localhost:8080/api/files/uploadCycleFile?cycleId=1&docTitle=pvFile', formData, {
+      // reportProgress: true
+    });
+    this.http
+      .request(req)
+      .pipe(filter(e => e instanceof HttpResponse))
+      .subscribe(
+        () => {
+          this.uploading = false;
+          this.fileList = [];
+          this.msg.success('upload successfully.');
+        },
+        () => {
+          this.uploading = false;
+          this.msg.error('upload failed.');
+        }
+      );
+  }
+  
 }

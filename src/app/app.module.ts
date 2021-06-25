@@ -10,6 +10,10 @@ import { ExcelService } from './shared/service/excel.service';
 import { NZ_I18N } from 'ng-zorro-antd/i18n';
 import { en_US } from 'ng-zorro-antd/i18n';
 import en from '@angular/common/locales/en';
+import { registerLocaleData } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
+registerLocaleData(en);
 
 @NgModule({
   declarations: [
@@ -21,6 +25,7 @@ import en from '@angular/common/locales/en';
     HttpClientModule,
     BrowserAnimationsModule,
     NgbModule,
+    FormsModule,
   ],
   providers: [{ provide: NZ_I18N, useValue: en_US },authInterceptorProviders,ExcelService],
   bootstrap: [AppComponent]

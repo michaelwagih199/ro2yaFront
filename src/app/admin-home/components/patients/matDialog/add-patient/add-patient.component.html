@@ -125,6 +125,7 @@
                             formControlName="comments" [(ngModel)]="patient.comments" autocomplete="off">
                     </mat-form-field>
                 </div>
+
                 <div class="col">
                     <mat-form-field class="full-width" appearance="outline">
                         <mat-label> PreviousTreatment </mat-label>
@@ -135,14 +136,26 @@
                 </div>
 
                 <div class="col">
-                    <mat-form-field class="full-width" appearance="outline">
+                    <!-- <mat-form-field class="full-width" appearance="outline">
                         <mat-label>Doctor</mat-label>
                         <mat-select matNativeControl required [(ngModel)]="doctorId" formControlName="doctor">
                             <mat-option *ngFor="let item of doctorList" [value]="item.id">
                                 {{item.doctorName}}
                             </mat-option>
                         </mat-select>
-                    </mat-form-field>                   
+                    </mat-form-field>    
+                                -->
+
+                    <mat-form-field appearance="outline" class="example-full-width">
+                        <mat-label>Doctor</mat-label>
+                        <input type="text" matInput formControlName="doctor" [(ngModel)]="doctorId" [matAutocomplete]="auto">
+                        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" >
+                            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                                {{option.doctorName}}
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+
                 </div>
 
                 <div class="col">
@@ -161,6 +174,6 @@
 
 </mat-dialog-content>
 <mat-dialog-actions align="center">
-    <button mat-raised-button  color="accent" (click)="save()" [disabled]="!validateForm.valid">Save</button>
+    <button mat-raised-button color="accent" (click)="save()" [disabled]="!validateForm.valid">Save</button>
     <button mat-raised-button color="primary" (click)="close()" tabindex="1">Cancel</button>
 </mat-dialog-actions>
