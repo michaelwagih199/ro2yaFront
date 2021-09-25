@@ -9,20 +9,37 @@
         <div style="margin-top:2%; margin-left: 1%; margin-right: 1%;">
             <nz-tabset>
                 <nz-tab nzTitle="Patients">
-                    <form>
-                        <mat-form-field appearance="outline" class="full-width">
-                            <mat-label>Voucher Numbers</mat-label>
-                            <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto"
-                                [(ngModel)]="searchInout" (keyup.enter)="search()" (click)="onSearchClick()">
-                            <mat-icon color="accent" matSuffix>search</mat-icon>
-                            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-                                <mat-option *ngFor="let option of filteredOptions | async" [value]="option"
-                                    (click)="OnHumanSelected(searchInout)">
-                                    {{option}}
-                                </mat-option>
-                            </mat-autocomplete>
-                        </mat-form-field>
-                    </form>
+                    <div class="flex-container">
+
+                        <div class="flex-item">
+                            <form>
+                                <mat-form-field appearance="outline" class="full-width">
+                                    <mat-label>CenterSearch</mat-label>
+                                    <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto"
+                                        [(ngModel)]="searchInout" (keyup.enter)="search()" (click)="onSearchClick()">
+                                    <mat-icon color="accent" matSuffix>search</mat-icon>
+                                    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                                        <mat-option *ngFor="let option of filteredOptions | async" [value]="option"
+                                            (click)="OnHumanSelected(searchInout)">
+                                            {{option}}
+                                        </mat-option>
+                                    </mat-autocomplete>
+                                </mat-form-field>
+                            </form>
+                        </div>
+
+                        <div class="flex-item2">
+                            <mat-form-field appearance="outline" class="full-width">
+                                <mat-label> Search Filter </mat-label>
+                                <mat-select [(ngModel)]="selectedSearchFilter" (ngModelChange)="onSearchFilterChange($event)">
+                                    <mat-option (click)="refresh()">All Data</mat-option>
+                                    <mat-option value="name">Name</mat-option>
+                                    <mat-option value="voucher">Voucher</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                    </div>
                     <div>
                         <nz-table #basicTable nzSize="middle" [nzData]="centerAdminList">
                             <thead>
@@ -30,7 +47,6 @@
                                     <th>Code</th>
                                     <th>Name</th>
                                     <th>IDNumber</th>
-                                    <th>Phone</th>
                                     <th>Phone</th>
                                     <th>VoucherNo</th>
                                     <th>CycleStatues</th>
@@ -59,16 +75,12 @@
                     </div>
 
                 </nz-tab>
-                <nz-tab nzTitle="Tab 2">
-
+                <nz-tab nzTitle="Reports">
+                    <app-center-admin-reports></app-center-admin-reports>
                 </nz-tab>
             </nz-tabset>
         </div>
         <!--end of flex -->
-
-
-
-
     </div>
 </div>
 
@@ -92,10 +104,10 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let item of centerAdminDetailsList">
-                            <th>{{ item.patientCycle.injectionDate}}</th>
+                            <th>{{ item.patientCycle.injectionDate | date: 'dd/MM/yyyy' }}</th>
                             <th>{{ item.patientCycle.injectionPayment }}</th>
                             <th>{{ item.patientCycle.injectionEye}}</th>
-                            <th>{{ item.patientCycle.octDate}}</th>
+                            <th>{{ item.patientCycle.octDate | date: 'dd/MM/yyyy'  }}</th>
                         </tr>
                     </tbody>
                 </table>
@@ -136,7 +148,7 @@
                         </div>
                     </div>
                 </div>
-                <nz-upload [(nzFileList)]="fileList" [nzBeforeUpload]="beforeUpload">
+                <nz-upload [(nzFileList)]="fileList" [nzBeforeUpload]="beforeUpload" [nzAccept]="imagesType" >
                     <button *ngIf="isUploadImpty" nzBlock nz-button><i nz-icon nzType="upload"></i>Select File</button>
                 </nz-upload>
             </div>

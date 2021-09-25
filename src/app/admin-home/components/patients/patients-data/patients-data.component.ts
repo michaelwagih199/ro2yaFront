@@ -100,6 +100,21 @@ export class PatientsDataComponent implements OnInit {
     );
   }
 
+  getPatientCodes(){
+    this.patientService.getPatientCodes().subscribe(
+      (response) => {
+        this.options = response;
+        this.filteredOptions = this.myControl.valueChanges.pipe(
+          startWith(''),
+          map((value) => this._filter(value))
+        );
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
   getPhones() {
     this.patientService.getPhones().subscribe(
       (response) => {
@@ -173,6 +188,20 @@ export class PatientsDataComponent implements OnInit {
     );
   }
 
+  findByIPatientCode() {
+    this.isLoading = true;
+    this.patientService.findByPatientCode(this.searchInout).subscribe(
+      (data) => {
+        this.isLoading = false;
+        this.patientList = data;
+      },
+      (error) => {
+        this.isLoading = false;
+        console.log(error);
+      }
+    );
+  }
+
   /**
    * events
    */
@@ -181,6 +210,7 @@ export class PatientsDataComponent implements OnInit {
     if (this.selectedSearchFilter == 'name') this.findByName();
     else if (this.selectedSearchFilter == 'phone') this.findByPhone();
     else if (this.selectedSearchFilter == 'idNumber') this.findByIdNumber();
+    else if (this.selectedSearchFilter == 'patientCode') this.findByIPatientCode();
   }
 
   refresh() {
@@ -278,14 +308,14 @@ export class PatientsDataComponent implements OnInit {
     if (this.selectedSearchFilter == 'name') this.findByName();
     else if (this.selectedSearchFilter == 'phone') this.findByPhone();
     else if (this.selectedSearchFilter == 'idNumber') this.findByIdNumber();
+    else if (this.selectedSearchFilter == 'patientCode') this.findByIPatientCode();
   }
 
   onSearchFilterChange(value: string) {
-    if (value == 'name') {
-      this.getNames();
-    } else if (value == 'phone') {
-      this.getPhones();
-    } else this.getIdNumbers();
+    if (value == 'name') this.getNames();
+    else if (value == 'phone') this.getPhones();
+    else if (value == 'idNumber') this.getIdNumbers();
+    else if (value == 'patientCode') this.getPatientCodes();
   }
 
   onSearchClick() {

@@ -1,0 +1,55 @@
+<mat-card class="mat-elevation-z2">
+    <mat-card-header>
+        <div class="container-fluid text-center">
+            <div class="row p-2 justify-content-around">
+                <div class="col">
+                    <h3> List of Patient PV</h3>
+                </div>
+                <div class="col">
+                    <button mat-mini-fab color="accent" (click)="savePv()">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </mat-card-header>
+    <mat-card-content>
+        <mat-progress-bar class="m-2" color="accent" mode="indeterminate" *ngIf="isLoading" value="20">
+        </mat-progress-bar>
+        <mat-table [dataSource]="pvList" style="margin-top: 5px;">
+            <ng-container matColumnDef="creadetDate">
+                <mat-header-cell *matHeaderCellDef> Created date
+                </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element?.createdDate| date: 'dd/MM/yyyy' }} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="comment">
+                <mat-header-cell *matHeaderCellDef>Comment </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element?.pvComment}} </mat-cell>
+            </ng-container>
+            
+            <ng-container matColumnDef="pvCode">
+                <mat-header-cell *matHeaderCellDef> Pv Code</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element?.pvCode}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+                <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+
+                <td mat-cell *matCellDef="let element">
+                    <button mat-icon-button color="primary" (click)="editeDialog(element)">
+                        <mat-icon>create</mat-icon>
+                    </button>
+                    |
+                    <button mat-icon-button color="warn" (click)="deleteDialog(element)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </td>
+
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+    </mat-card-content>
+
+</mat-card>

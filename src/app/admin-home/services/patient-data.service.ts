@@ -8,6 +8,7 @@ import { environment } from 'src/environments/environment';
 })
 export class PatientDataService {
 
+
   private baseUrl = `${environment.baseUrl}/patients`;
 
   constructor(private http: HttpClient) {}  
@@ -24,6 +25,11 @@ export class PatientDataService {
     return this.http.get(`${this.baseUrl}/names`);
   }
 
+  getPatientCodes() :Observable<any>{
+    return this.http.get(`${this.baseUrl}/codes`);
+  }
+
+ 
   getPhones():Observable<any> {
     return this.http.get(`${this.baseUrl}/phones`);
   }
@@ -43,6 +49,10 @@ export class PatientDataService {
 
   findByPhone(phone:any):Observable<any> {
     return this.http.get(`${this.baseUrl}/phone?phone=${phone}`);
+  }
+
+  findByPatientCode(patientCode:any):Observable<any> {
+    return this.http.get(`${this.baseUrl}/code?patientCode=${patientCode}`);
   }
 
   findByIdNumber(idNumber:any):Observable<any> {

@@ -1,65 +1,70 @@
-<div class="container_c">
+<div class="flex-container">
+    <div class="flex-item">
+        <button mat-raised-button (click)="getReport()"> View Report </button>
+    </div>
 
-    <div class="mainDive">
-        <div class="flex-container">
-            <div class="flex-item">
-                <button mat-raised-button color="primary" class="mt-2" (click)="getReport()"> View Report </button>
-            </div>
-
-            <div class="flex-item">
-                <mat-form-field appearance="fill">
-                    <mat-label>Enter a date range</mat-label>
-                    <mat-date-range-input [rangePicker]="picker">
-                        <input matStartDate placeholder="Start date" [(ngModel)]="startDate" autocomplete="off">
-                        <input matEndDate placeholder="End date" [(ngModel)]="endDate" autocomplete="off">
-                    </mat-date-range-input>
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-date-range-picker #picker></mat-date-range-picker>
-                </mat-form-field>
-            </div>
-        </div>
-        <hr>
-        <!--end of flex -->
-        <div>
-            <mat-progress-bar color="accent" mode="indeterminate" *ngIf="isLoading" value="20"></mat-progress-bar>
-        </div>
-
-        <table mat-table [dataSource]="centerAdminList">
-
-            <!-- Name Column -->
-            <ng-container matColumnDef="patientCode">
-                <th mat-header-cell *matHeaderCellDef> Code </th>
-                <td mat-cell *matCellDef="let element"> {{element?.patientCycle?.patient?.patientCode}} </td>
-            </ng-container>
-
-
-            <ng-container matColumnDef="patientName">
-                <th mat-header-cell *matHeaderCellDef> Name </th>
-                <td mat-cell *matCellDef="let element"> {{element?.patientCycle?.patient?.patientName}}</td>
-            </ng-container>
-
-            <ng-container matColumnDef="patientIDNumber">
-                <th mat-header-cell *matHeaderCellDef> IDNumber </th>
-                <td mat-cell *matCellDef="let element"> {{element?.patientCycle?.patient?.patientIDNumber}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="phone">
-                <th mat-header-cell *matHeaderCellDef> Phone </th>
-                <td mat-cell *matCellDef="let element"> {{element?.patientCycle?.patient?.phone}}</td>
-            </ng-container>
-
-            <ng-container matColumnDef="voucherCode">
-                <th mat-header-cell *matHeaderCellDef> VoucherNo </th>
-                <td mat-cell *matCellDef="let element"> {{element?.patientCycle?.voucherNo}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="cycleStatues">
-                <th mat-header-cell *matHeaderCellDef> CycleStatues </th>
-                <td mat-cell *matCellDef="let element"> {{element?.cycleStatues}} </td>
-            </ng-container>
-
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
+    <div class="flex-item ">
+        <mat-form-field appearance="fill">
+            <mat-label>Enter a date range</mat-label>
+            <mat-date-range-input [rangePicker]="picker">
+                <input matStartDate placeholder="Start date" [(ngModel)]="startDate" autocomplete="off">
+                <input matEndDate placeholder="End date" [(ngModel)]="endDate" autocomplete="off">
+            </mat-date-range-input>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
     </div>
 </div>
+<hr>
+
+<!--end of flex -->
+<div>
+    <mat-progress-bar color="accent" mode="indeterminate" *ngIf="isLoading" value="20"></mat-progress-bar>
+</div>
+
+<table mat-table [dataSource]="centerAdminList">
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="patientCode">
+        <th mat-header-cell *matHeaderCellDef> Code </th>
+        <td mat-cell *matCellDef="let element"> {{element?.patientCycle?.patient?.patientCode}} </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="patientName">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let element"> {{element?.patientCycle?.patient?.patientName}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="patientIDNumber">
+        <th mat-header-cell *matHeaderCellDef> IDNumber </th>
+        <td mat-cell *matCellDef="let element"> {{element?.patientCycle?.patient?.patientIDNumber}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="phone">
+        <th mat-header-cell *matHeaderCellDef> Phone </th>
+        <td mat-cell *matCellDef="let element"> {{element?.patientCycle?.patient?.phone}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="voucherCode">
+        <th mat-header-cell *matHeaderCellDef> VoucherNo </th>
+        <td mat-cell *matCellDef="let element"> {{element?.patientCycle?.voucherNo}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="cycleStatues">
+        <th mat-header-cell *matHeaderCellDef> CycleStatues </th>
+        <td mat-cell *matCellDef="let element"> {{element?.cycleStatues}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> </th>
+        <td mat-cell *matCellDef="let element" class="action-link">
+            <button mat-icon-button color="accent" (click)="toInfo(element)">
+                <mat-icon>image</mat-icon>
+            </button>
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

@@ -7,14 +7,12 @@ import { PatientDataService } from 'src/app/admin-home/services/patient-data.ser
 import { ActivatedRoute, Router } from '@angular/router';
 import { CenterAdminService } from '../../../services/center-admin.service';
 import { CenterAdminDataModel } from '../../../models/centerAdminModel';
-import { element } from 'protractor';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DataService } from '../../../../shared/service/data.service';
-import { PatientsModel } from 'src/app/admin-home/models/patients';
-import { ThrowStmt } from '@angular/compiler';
 import { NzUploadFile } from 'ng-zorro-antd/upload';
 import { HttpClient, HttpRequest, HttpResponse } from '@angular/common/http';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { PatientCycleService } from 'src/app/admin-home/services/patient-cycle.service';
 
 @Component({
   selector: 'app-center-admin',
@@ -35,6 +33,10 @@ export class CenterAdminComponent implements OnInit {
   private routeSub!: Subscription;
   centerAdminModel: CenterAdminDataModel = new CenterAdminDataModel();
   centerName: any;
+  selectedCycle!: number;
+  imageToShow!: string;
+  imagType: any;
+  imagesType: string = 'image/x-png,image/gif,image/jpeg';
 
   displayedColumns: string[] = [
     'patientCode',
@@ -51,13 +53,15 @@ export class CenterAdminComponent implements OnInit {
   constructor(
     private _snackBar: MatSnackBar,
     private patientService: PatientDataService,
+    private patientCycleService: PatientCycleService,
     private centerAdminService: CenterAdminService,
     private fb: FormBuilder,
     private router: Router,
     private modalService: NgbModal,
     private route: ActivatedRoute,
     private dataServer: DataService,
-    private http: HttpClient, private msg: NzMessageService
+    private http: HttpClient,
+    private msg: NzMessageService
   ) {}
 
   ngOnInit(): void {
@@ -98,8 +102,8 @@ export class CenterAdminComponent implements OnInit {
     );
   }
 
-  getPhones() {
-    this.patientService.getPhones().subscribe(
+  getVouchers(){
+    this.patientCycleService.getVouchers().subscribe(
       (response) => {
         this.options = response;
         this.filteredOptions = this.myControl.valueChanges.pipe(
@@ -131,38 +135,17 @@ export class CenterAdminComponent implements OnInit {
   /**
    * events
    */
-
-  findByName() {
-    this.isLoading = true;
-    this.patientService.findByName(this.searchInout).subscribe(
-      (data) => {
-        this.isLoading = false;
-        this.centerAdminList = data;
-      },
-      (error) => {
-        this.isLoading = false;
-        console.log(error);
-      }
-    );
-  }
-
-  findByPhone() {
-    this.isLoading = true;
-    this.patientService.findByPhone(this.searchInout).subscribe(
-      (data) => {
-        this.isLoading = false;
-        this.centerAdminList = data;
-      },
-      (error) => {
-        this.isLoading = false;
-        console.log(error);
-      }
-    );
+  onSearchFilterChange(value: string) {
+    if (value == 'name') {
+      this.getNames();
+    } else if (value == 'voucher') {
+      this.getVouchers();
+    }
   }
 
   search() {
     if (this.selectedSearchFilter == 'name') this.findByName();
-    else if (this.selectedSearchFilter == 'phone') this.findByPhone();
+    else if (this.selectedSearchFilter == 'voucher') this.findByVoucher();
   }
 
   refresh() {
@@ -202,22 +185,37 @@ export class CenterAdminComponent implements OnInit {
     //       console.log();
     //     }
     //   );
-    
   }
 
   OnHumanSelected(SelectedHuman: any) {
     this.searchInout = SelectedHuman;
     if (this.selectedSearchFilter == 'name') this.findByName();
-    else if (this.selectedSearchFilter == 'phone') this.findByPhone();
+    else if (this.selectedSearchFilter == 'voucher') this.findByVoucher();
   }
 
-  onSearchFilterChange(value: string) {
-    if (value == 'name') {
-      this.getNames();
-    } else {
-      this.getPhones();
-    }
+
+  findByVoucher() {
+    this.isLoading = true;
+    this.centerAdminService.findByVoucher(this.hospitalId,this.searchInout).subscribe(
+      (data) => {
+        this.isLoading = false;
+        this.centerAdminList = data;
+      },
+      (error) => {}
+    );
   }
+
+  findByName() {
+    this.isLoading = true;
+    this.centerAdminService.findByName(this.hospitalId,this.searchInout).subscribe(
+      (data) => {
+        this.isLoading = false;
+        this.centerAdminList = data;
+      },
+      (error) => {}
+    );
+  }
+
 
   onSearchClick() {
     this.searchInout = '';
@@ -227,30 +225,36 @@ export class CenterAdminComponent implements OnInit {
     this.router.navigateByUrl(`/admin/centerReport/${id}`);
   }
 
-  /**
-   * UIUX and Helbers
-   *
-   */
-
-  openSnackBar(message: string, action: string) {
-    this._snackBar.open(message, action, {
-      duration: 2000,
-    });
-  }
-
-
   /**upload file */
   uploading = false;
   fileList: NzUploadFile[] = [];
-  isUploadImpty:boolean = true;
+  isUploadImpty: boolean = true;
 
   beforeUpload = (file: NzUploadFile): boolean => {
-    this.isUploadImpty = false; 
+    this.isUploadImpty = false;
     this.fileList = this.fileList.concat(file);
     return false;
   };
 
   handleUpload(): void {
+    this.isLoading = true;
+    this.centerAdminService
+      .updateCycleTestToDoneTest(this.centerAdminModel.id)
+      .subscribe(
+        (data) => {
+          this.isLoading = false;
+          this.refresh();
+          this.uploadImage();
+          this.openSnackBar('Cycle Updated Successfull', '');
+          this.modalService.dismissAll();
+        },
+        (error) => {
+          console.log('error');
+        }
+      );
+  }
+
+  uploadImage() {
     const formData = new FormData();
     // tslint:disable-next-line:no-any
     this.fileList.forEach((file: any) => {
@@ -258,12 +262,17 @@ export class CenterAdminComponent implements OnInit {
     });
     this.uploading = true;
     // You can use any AJAX library you like
-    const req = new HttpRequest('POST', 'http://localhost:8080/api/files/uploadCycleFile?cycleId=1&docTitle=pvFile', formData, {
-      // reportProgress: true
-    });
+    const req = new HttpRequest(
+      'POST',
+      `http://localhost:8080/api/files/uploadCycleFile?cycleId=${this.centerAdminModel.id}&docTitle=cycleScreen`,
+      formData,
+      {
+        // reportProgress: true
+      }
+    );
     this.http
       .request(req)
-      .pipe(filter(e => e instanceof HttpResponse))
+      .pipe(filter((e) => e instanceof HttpResponse))
       .subscribe(
         () => {
           this.uploading = false;
@@ -276,5 +285,15 @@ export class CenterAdminComponent implements OnInit {
         }
       );
   }
-  
+
+  /**
+   * UIUX and Helbers
+   *
+   */
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      duration: 2000,
+    });
+  }
 }

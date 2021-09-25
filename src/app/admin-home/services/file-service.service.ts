@@ -19,5 +19,8 @@ export class FileServiceService {
     return this.http.get(imageUrl, { responseType: 'blob' });
   }
 
+  getCycleDocuments(cycleId: number): Observable<any>{
+    return this.http.get(`${this.baseUrl}/cycleDocuments?cycleId=${cycleId}`);
+  }
 
 }

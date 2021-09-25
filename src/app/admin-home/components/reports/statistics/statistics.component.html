@@ -1,0 +1,63 @@
+<div class="flex-container">
+    
+    <div class="flex-item">
+        <button mat-raised-button (click)="exportAsXLSX()"> Export Report </button>
+    </div>
+
+    <div class="flex-item">
+        <button mat-raised-button (click)="getReport()"> View Report </button>
+    </div>
+
+    <div class="flex-item ">
+        <mat-form-field appearance="fill">
+            <mat-label>Enter a date range</mat-label>
+            <mat-date-range-input [rangePicker]="picker">
+                <input matStartDate placeholder="Start date" [(ngModel)]="startDate" autocomplete="off">
+                <input matEndDate placeholder="End date" [(ngModel)]="endDate" autocomplete="off">
+            </mat-date-range-input>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
+    </div>
+</div>
+<!--end of flex -->
+<div class="mt-2 mb-2">
+    <mat-progress-bar color="accent" mode="indeterminate" *ngIf="isLoading" value="20"></mat-progress-bar>
+    <mat-card>
+        <div class="mt-2" style="text-align: center;">
+            <!--table-->
+            <table class="table table-bordered font-m ">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Patients</th>
+                        <th>Center</th>
+                        <th>Age Class A</th>
+                        <th>Age Class B</th>
+                        <th>Age Class C</th>
+                        <th>Doctors</th>
+                        <th>New Casses</th>
+                        <th>Males</th>
+                        <th>Females</th>
+                        <th>Vouchers</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{statisticsData?.totalNewPatients}}</td>
+                        <td>{{statisticsData?.centersNo}}</td>
+                        <td>{{statisticsData?.ageFrom30to50}}</td>
+                        <td>{{statisticsData?.ageFrom50to70}}</td>
+                        <td>{{statisticsData?.ageFrom70to100}}</td>
+                        <td>{{statisticsData?.doctorNo}}</td>
+                        <td>{{statisticsData?.noNewCases}}</td>
+                        <td>{{statisticsData?.noMales}}</td>
+                        <td>{{statisticsData?.noFemales}}</td>
+                        <td>{{statisticsData?.novoucherscode}}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </mat-card>
+
+</div>

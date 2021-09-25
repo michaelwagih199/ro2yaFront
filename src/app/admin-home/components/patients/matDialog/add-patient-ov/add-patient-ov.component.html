@@ -1,0 +1,26 @@
+<h2 mat-dialog-title>Save Cycle</h2>
+<mat-dialog-content>
+
+    <form [formGroup]="validateForm">
+        <div class="container-fluid">
+
+            <mat-form-field appearance="outline">
+                <mat-label> PV Code </mat-label>
+                <input matInput required placeholder="PV Code" formControlName="pvCode" [(ngModel)]="pv.pvCode"
+                    autocomplete="off">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Comment</mat-label>
+                <textarea matInput placeholder="Comment" formControlName="pvComment" [(ngModel)]="pv.pvComment"
+                    autocomplete="off"></textarea>
+            </mat-form-field>
+
+        </div>
+    </form>
+
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+    <button mat-raised-button color="accent" (click)="save()" [disabled]="!validateForm.valid">Save</button>
+    <button mat-raised-button color="primary" (click)="close()" tabindex="1">Cancel</button>
+</mat-dialog-actions>

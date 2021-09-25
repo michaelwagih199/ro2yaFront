@@ -24,6 +24,10 @@ export class PatientCycleService {
     return this.http.put(`${this.baseUrl}/${id}?patientId=${patientId}&hospitalId=${hospitalId}`, object);
   }
   
+  getVouchers():Observable<any>{
+    return this.http.get(`${this.baseUrl}/vouchers`);
+  }
+
   delete(id:number): Observable<any> {
     return this.http.put(`${this.baseUrl}/archive?id=${id}`,null);
   }

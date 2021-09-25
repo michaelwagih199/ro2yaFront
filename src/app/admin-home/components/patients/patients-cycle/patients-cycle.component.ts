@@ -131,7 +131,7 @@ export class PatientsCycleComponent implements OnInit {
   deleteDialog(element: PatientCycleModel) {
     const dialogRef = this.dialog.open(ConfirmationDialog, {
       data: {
-        message: `Are You Shoure To Delete? `,
+        message: `Are You Sure To Delete? `,
         buttonText: {
           ok: `Delete`,
           cancel: `Cancel`,

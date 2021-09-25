@@ -1,0 +1,86 @@
+$font: "El Messiri", sans-serif;
+.container_c {
+  width: 100%;
+  height: 100%;
+  background-color: #cccccc;
+  background-size: cover;
+  background-image: url("https://cdn.pixabay.com/photo/2012/08/27/14/19/mountains-55067_960_720.png");
+  position: absolute;
+  .mainDive {
+    width: 90%;
+    height: 90%;
+    background-color: #eeeeee;
+    margin: auto;
+    position: absolute;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    border-radius: 20px;
+    // border: 1px solid #656262;
+    text-align: center;
+  }
+
+  .header-c {
+    position: absolute;
+    background-color: #656262;
+    width: 60%;
+    height: 70px;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    margin-top: 1%;
+    border: 2px solid #cccccc;
+    border-radius: 20px;
+    z-index: 1;
+    .text-Header {
+      text-align: center;
+      font-family: $font;
+      color: #e5e5e5;
+      font-size: x-large;
+      margin-top: 20px;
+    }
+  }
+}
+.mat-form-field {
+  font-family: $font;
+}
+.mat-raised-button {
+  background-color: #656262;
+  color: #fff;
+}
+.flex-container {
+  /* We frst create a flex layout context */
+  display: flex;
+  width: 100%;
+  flex-flow: row wrap;
+  /* Then we define how is distributed the remaining space */
+  justify-content: space-around;
+  justify-content: baseline;
+  background-color: #cccccc;
+  border-radius: 10px;
+  border: 2px solid #fff;
+
+}
+
+.flex-item {
+  text-align: center;
+  flex-grow: 1;
+  margin-top: 15px;
+}
+
+.flex-item2 {
+  text-align: center;
+  flex-shrink: 2;
+}
+.mat-header-cell,
+.mat-cell {
+  font-family: $font;
+  text-align: center;
+}
+
+.font-m {
+  font-family: $font;
+}
+

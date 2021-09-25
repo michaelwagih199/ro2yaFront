@@ -10,6 +10,9 @@ import { CentersComponent } from './components/centers/centers.component';
 import { CenterLoginComponent } from './components/center-admin/dialogs/center-login/center-login.component';
 import { CenterAdminComponent } from './components/center-admin/center-admin/center-admin.component';
 import { CenterAdminReportsComponent } from './components/center-admin/center-admin-reports/center-admin-reports.component';
+import { ReportsListComponent } from './components/reports/reports-list/reports-list.component';
+import { StatisticsComponent } from './components/reports/statistics/statistics.component';
+import { CenterReportComponent } from './components/reports/center-report/center-report.component';
 
 const routes: Routes = [
   {
@@ -58,6 +61,22 @@ const routes: Routes = [
         component: PatientsComponent,
         canActivate: [AuthGaurdService],
       },
+      {
+        path: 'reports',
+        component: ReportsListComponent,
+        canActivate: [AuthGaurdService],
+      },
+      {
+        path: 'reports/statistics',
+        component: StatisticsComponent,
+        canActivate: [AuthGaurdService],
+      },
+      {
+        path: 'reports/centers',
+        component: CenterReportComponent,
+        canActivate: [AuthGaurdService],
+      },
+
     ],
   },
 ];

@@ -10,10 +10,10 @@ import { ConfirmationDialog } from './components/layout/dialog/confirmation/conf
 import { AboutAppDialogComponent } from './components/layout/dialog/about-app-dialog/about-app-dialog.component';
 import { NgZorroModule } from './components/ng-zorro/ng-zorro.module';
 import { NgSelectModule } from '@ng-select/ng-select';
-
-
+import { ImagesComponent } from './components/layout/dialog/images/images.component';
+import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 @NgModule({
-  declarations: [...fromComponents.components, ConfirmationDialog, AboutAppDialogComponent],
+  declarations: [...fromComponents.components, ConfirmationDialog,ImagesComponent, AboutAppDialogComponent],
   imports: [
     CommonModule,
     SharedRoutingModule,
@@ -25,6 +25,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
     NgxPaginationModule,
     NgZorroModule,
     NgSelectModule,
+    NgbCarouselModule
    ],
   exports: [   
     CommonModule,
@@ -36,6 +37,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
     NgxPaginationModule,
     NgZorroModule,
     NgSelectModule,
+    NgbCarouselModule
   ]
 })
 export class SharedModule { }

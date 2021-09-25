@@ -5,6 +5,12 @@ import { FileServiceService } from '../../services/file-service.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import * as fileSaver from 'file-saver';
 
+interface ImagesModel {
+  src: string;
+  header: string;
+  discription: string;
+}
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -22,6 +28,13 @@ export class AdminHomeComponent implements OnInit {
   ngOnInit(): void {
     this.getImageFromService();
   }
+
+
+  images: ImagesModel[] = [
+    { src: 'https://gentiumhealthcare.com/wp-content/uploads/2021/03/pspweb-min.jpg', header: 'Polimigos Eco Systems', discription: '' },
+    { src: 'assets/home2.jpg', header: 'Together We Can', discription: '' },
+    { src: 'assets/home5.jpg', header: 'Never Stop Dreaming', discription: '' },
+  ];
 
   getImageFromService() {
     // this.isImageLoading = true;

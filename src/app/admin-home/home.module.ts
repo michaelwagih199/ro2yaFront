@@ -17,10 +17,15 @@ import { CenterLoginComponent } from './components/center-admin/dialogs/center-l
 import { ChangeCycleStatuesComponent } from './components/center-admin/dialogs/change-cycle-statues/change-cycle-statues.component';
 import { PatientTestsReportComponent } from './components/patients/patient-tests-report/patient-tests-report.component';
 import { CenterAdminReportsComponent } from './components/center-admin/center-admin-reports/center-admin-reports.component';
+import { ReportsListComponent } from './components/reports/reports-list/reports-list.component';
+import { CenterReportComponent } from './components/reports/center-report/center-report.component';
+import { StatisticsComponent } from './components/reports/statistics/statistics.component';
+import { PatientPvComponent } from './components/patients/patient-pv/patient-pv.component';
+import { AddPatientOvComponent } from './components/patients/matDialog/add-patient-ov/add-patient-ov.component';
 
 
 @NgModule({
-  declarations: [AdminHomeComponent, CentersComponent, DoctorsComponent, PatientsComponent, PatientsDataComponent, PatientsCycleComponent, AddPatientComponent, PatientDetailsComponent, AddPatientCycleComponent, CenterAdminComponent, CenterLoginComponent, ChangeCycleStatuesComponent, PatientTestsReportComponent, CenterAdminReportsComponent],
+  declarations: [AdminHomeComponent, CentersComponent, DoctorsComponent, PatientsComponent, PatientsDataComponent, PatientsCycleComponent, AddPatientComponent, PatientDetailsComponent, AddPatientCycleComponent, CenterAdminComponent, CenterLoginComponent, ChangeCycleStatuesComponent, PatientTestsReportComponent, CenterAdminReportsComponent, ReportsListComponent, CenterReportComponent, StatisticsComponent, PatientPvComponent, AddPatientOvComponent],
   imports: [
     CommonModule,
     HomeRoutingModule,

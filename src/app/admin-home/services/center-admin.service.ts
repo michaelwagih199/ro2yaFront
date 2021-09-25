@@ -7,6 +7,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class CenterAdminService {
+
   private baseUrl = `${environment.baseUrl}/centersAdmin`;
   constructor(private http: HttpClient) {}
 
@@ -24,8 +25,14 @@ export class CenterAdminService {
     );
   }
 
+  findByName(hospitalId: number, searchInout: any): Observable<any>{
+    return this.http.get(`${this.baseUrl}/hospital/patientName?hospitalId=${hospitalId}&patientName=${searchInout}`);
+  }
 
-
+  findByVoucher(hospitalId: number, searchInout: any): Observable<any>{
+    return this.http.get(`${this.baseUrl}/hospital/voucherNo?hospitalId=${hospitalId}&voucherNo=${searchInout}`);
+  }
+ 
   updateCycleTestToDoneTest(cycleStatuesId: number): Observable<any> {
     return this.http.put(
       `${this.baseUrl}/testDone?cycleStatuesId=${cycleStatuesId}`,
